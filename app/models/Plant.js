@@ -5,9 +5,12 @@ var PlantSchema = new Schema({
     plantName: String,
     plantID: String,
     plantSpeciesName: String,
-    temperatureSetting: String, //the temp that the user set from their mobile app
-    moistureSetting: String,    //the moisture setting that the user set from their mobile app
-    lightSetting: String,       //the light setting that the user set from their mobile app
+    minTemperature: String, //the temp that the user set from their mobile app
+    maxTemperature: String,
+    minMoisture: String,    //the moisture setting that the user set from their mobile app
+    maxMoisture: String,
+    minLight: String,
+    maxLight: String, //the light setting that the user set from their mobile app
     pictureURL: String
 }); 
 
