@@ -3,15 +3,16 @@ var Schema = mongoose.Schema;
 
 var PlantSchema = new Schema({
     plantName: String,
-    plantID: String,
-    plantSpeciesName: String,
+    plantType: String,
     minTemperature: String, //the temp that the user set from their mobile app
+    currentTemperature: String,
     maxTemperature: String,
     minMoisture: String,    //the moisture setting that the user set from their mobile app
+    currentMoisture: String,
     maxMoisture: String,
     minLight: String,
-    maxLight: String, //the light setting that the user set from their mobile app
-    pictureURL: String
+    currentLight: String,
+    maxLight: String //the light setting that the user set from their mobile app
 }); 
 
 var Plant = mongoose.model('Plant', PlantSchema);
