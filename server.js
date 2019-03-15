@@ -5,6 +5,20 @@ const cors = require('cors');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+var five = require('johnny-five');
+
+var board = new five.Board();
+
+board.on("ready", function() {
+
+  // Create a standard `led` component instance
+  var led = new five.Led(13);
+
+  // "blink" the led in 500ms
+  // on-off phase periods
+  led.blink(500);
+});
+
 //Going to need to install johnny-five package when ready in order to connect and communicate with arduino board!!!!!!!!!!!
 
 var User = require('./app/models/User');
@@ -93,14 +107,16 @@ var port = 8080;
     .post('/signIn', function(req, response, next){
         // Load hash from your password DB.
         
-        var uname = req.body.username;
+        //console.log("Body of http request (uname): " + req.body.username);
+        
         var passwordEntered = req.body.password;
         
-        User.find({username: uname}, function(err, user){
+        User.find({ username: req.body.username }, function(err, user){
             
             var hash = user.password;
-            hash.toString();
+            //hash.toString();
             console.log(hash);
+            console.log('username found: ' + user.username);
             console.log(passwordEntered);
             
             if(err){
@@ -108,10 +124,9 @@ var port = 8080;
             } else {
                 console.log("Comparing entered password and saved password right now.......");
                 
-                   bcrypt.compare(passwordEntered, hash, function(err, res) {
-                        
-                        var result = " ";
-                        
+                var result = " ";
+                
+                bcrypt.compare(passwordEntered, hash, function(err, res) {
                         
                         if(err){
                             console.log(err);
@@ -124,9 +139,10 @@ var port = 8080;
                             result = "Failed";
                         }
                        
-                        
-                        response.json({message: result});
                 });
+                
+                response.json({message: result});
+                
             }
         });
         
@@ -193,6 +209,18 @@ var port = 8080;
     })
     
     .get('/retrievePlantInfo/:_id', function(req, res, next){
+        
+        console.log("Plant " + req.params._id + " info is being requested");
+        
+        Plant.find({ _id: req.params._id }, function(err, plant){
+            if(err){
+                console.log(err);
+                throw err;
+            } else {
+                console.log(plant);
+                res.json(plant[0]);
+            }
+        });
         
     })
     
