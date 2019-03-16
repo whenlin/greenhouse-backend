@@ -17,8 +17,13 @@ board.on("ready", function() {
  // var led = new five.Led(13);
   var pin = new five.Pin("A1");
   
+  var counter = 0;
+  
   pin.read(function(error, value) {
-    console.log(value);
+      counter = counter + 1;
+      if(counter%15 == 0){
+        console.log(value);
+      }
   });
   
   /*const temperatureSensor = new five.Sensor({
@@ -283,7 +288,7 @@ var port = 8080;
                 
             var array = [];
                
-            for(i in Plants){
+            for(var i in Plants){
                  array.push(Plants[i].plantName); //THE ORDER OF THE ELEMENTS IN THIS ARRAY: PLANTNAME FIRST FOLLOWED BY ITS CORRESPONDING ID
                  array.push(Plants[i]._id);                      //THE ID NUMBERS ARE IN THE ODD ELEMENTS, THE PLANT NAMES ARE IN THE EVEN ELEMENTS
             }
