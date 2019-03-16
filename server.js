@@ -5,18 +5,44 @@ const cors = require('cors');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-var five = require('johnny-five');
+var plant = require('./app/models/Plant.js');
 
-var board = new five.Board();
+const five = require('johnny-five');
+
+const board = new five.Board();
 
 board.on("ready", function() {
 
   // Create a standard `led` component instance
-  var led = new five.Led(13);
-
+ // var led = new five.Led(13);
+  var pin = new five.Pin("A1");
+  
+  pin.read(function(error, value) {
+    console.log(value);
+  });
+  
+  /*const temperatureSensor = new five.Sensor({
+      pin: 'A0',
+      threshold: 4
+  });
+  
+  temperatureSensor.on('change', (value) =>{
+      let Vo = value;
+      const R1 = 10000;
+    let logR2, R2, T;
+    const c1 = 1.009249522e-03;
+    const c2 = 2.378405444e-04;
+    const c3 = 2.019202697e-07;
+    R2 = R1 * (1023.0 / Vo - 1.0);
+    logR2 = Math.log(R2);
+    T = (1.0 / (c1 + c2 * logR2 + c3 * logR2 * logR2 * logR2));
+    T = T - 273.15;
+    T = (T * 9.0) / 5.0 + 32.0;
+    T = (T - 32) * (5 / 9);
+  });*/
   // "blink" the led in 500ms
   // on-off phase periods
-  led.blink(500);
+ // led.blink(500);
 });
 
 //Going to need to install johnny-five package when ready in order to connect and communicate with arduino board!!!!!!!!!!!
@@ -181,7 +207,28 @@ var port = 8080;
     })
     
     .post('/setLight/:_id', function(req, res, next){
-        
+        plant.findById(req.params._id, function(err, Plant) {
+            if (err) {
+                res.send(err);
+            } else {
+                var plantBeforeUpdate = new plant();
+                plantBeforeUpdate._id = Plant._id;
+                plantBeforeUpdate.plantName = Plant.plantName;
+                plantBeforeUpdate.plantType = Plant.plantType;
+                plantBeforeUpdate.minTemperature = Plant.minTemperature; //the temp that the user set from their mobile app
+                plantBeforeUpdate.currentTemperature = Plant.currentTemperature;
+                plantBeforeUpdate.maxTemperature = Plant.maxTemperature;
+                plantBeforeUpdate.minMoisture = Plant.minMoisture;   //the moisture setting that the user set from their mobile app
+                plantBeforeUpdate.currentMoisture = Plant.currentMoisture;
+                plantBeforeUpdate.maxMoisture = Plant.maxMoisture;
+                plantBeforeUpdate.minLight = Plant.minLight;
+                plantBeforeUpdate.currentLight = Plant.currentLight;
+                plantBeforeUpdate.maxLight = Plant.maxLight;
+                
+
+                
+            }
+        });
     })
     
     .post('/setMoisture/:_id', function(req, res, next){
