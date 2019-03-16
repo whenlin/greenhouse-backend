@@ -20,7 +20,7 @@ board.on("ready", function() {
   
   var counter = 0;
   
-  pin.write(50);
+  pin.write(20);
   
   
 //   pin.read(function(error, value) {
