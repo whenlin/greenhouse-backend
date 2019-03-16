@@ -15,16 +15,21 @@ board.on("ready", function() {
 
   // Create a standard `led` component instance
  // var led = new five.Led(13);
-  var pin = new five.Pin("A1");
+ 
+  var pin = new five.Pin(11);
   
   var counter = 0;
   
-  pin.read(function(error, value) {
-      counter = counter + 1;
-      if(counter%15 == 0){
-        console.log(value);
-      }
-  });
+  pin.write(50);
+  
+  
+//   pin.read(function(error, value) {
+//       counter = counter + 1;
+//       if(counter%15 == 0){
+//         console.log(value);
+//       }
+    
+//   });
   
   /*const temperatureSensor = new five.Sensor({
       pin: 'A0',
