@@ -22,14 +22,14 @@ board.on("ready", function() {
         mode: 3
     });
   
-  this.loop(500, function() {
+  this.loop(2000, function() {
       
     var counter = 0;
   
   if(counter%2 == 0)
-    pin.write(10);
+    pin.write(0);
   else{
-    pin.write(150);
+    pin.write(100);
     counter = counter + 1;
   }
   
