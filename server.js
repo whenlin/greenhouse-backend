@@ -22,15 +22,18 @@ board.on("ready", function() {
         mode: 3
     });
   
-  var counter = 0;
+  this.loop(500, function() {
+      
+    var counter = 0;
   
   if(counter%2 == 0)
     pin.write(10);
   else{
-    pin.write(30);
+    pin.write(50);
     counter = counter + 1;
   }
   
+  });
   
 //   pin.read(function(error, value) {
 //       counter = counter + 1;
