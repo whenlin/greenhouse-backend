@@ -16,32 +16,18 @@ board.on("ready", function() {
   // Create a standard `led` component instance
  // var led = new five.Led(13);
  
-  var pin = new five.Pin({
-        pin: 11,
-        type: "digital",
-        mode: 3
-    });
-  
-  this.loop(2000, function() {
-      
-    var counter = 0;
-  
-  if(counter%2 == 0)
-    pin.write(0);
-  else{
-    pin.write(100);
+ var counter = 0
+  if(counter%2 == 0){
+    this.pinMode(11, five.Pin.PWM);
+    this.analogWrite(11, 240);
+    counter = counter + 1;
+  } else {
+    this.pinMode(11, five.Pin.PWM);
+    this.analogWrite(11, 40);
     counter = counter + 1;
   }
-  
-  });
-  
-//   pin.read(function(error, value) {
-//       counter = counter + 1;
-//       if(counter%15 == 0){
-//         console.log(value);
-    
-//       }
-//   });
+      
+
   
   /*const temperatureSensor = new five.Sensor({
       pin: 'A0',
