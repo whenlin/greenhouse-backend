@@ -16,16 +16,10 @@ board.on("ready", function() {
   // Create a standard `led` component instance
  // var led = new five.Led(13);
  
- var counter = 0
-  if(counter%2 == 0){
-    this.pinMode(11, five.Pin.PWM);
-    this.analogWrite(11, 240);
-    counter = counter + 1;
-  } else {
+ 
     this.pinMode(11, five.Pin.PWM);
     this.analogWrite(11, 40);
-    counter = counter + 1;
-  }
+    
       
 
   
