@@ -29,7 +29,7 @@ board.on("ready", function() {
   if(counter%2 == 0)
     pin.write(10);
   else{
-    pin.write(50);
+    pin.write(150);
     counter = counter + 1;
   }
   
