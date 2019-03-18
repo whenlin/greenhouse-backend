@@ -9,7 +9,7 @@ var plant = require('./app/models/Plant.js');
 
 const five = require('johnny-five');
 
-const board = new five.Board();     //defining the arduino board
+const board = new five.Board({repl: false, debug: false});     //defining the arduino board
 
 board.on("ready", function() {
 
@@ -261,6 +261,7 @@ var port = 8080;
                 switch (plantBeforeUpdate.currentMoisture) {
                     case '0':
                         // code
+                        board.analogWrite(12, 51)
                         break;
                             
                     case '1':
@@ -383,6 +384,9 @@ var port = 8080;
                 //plantBeforeUpdate.minLight = Plant.minLight;
                 plantBeforeUpdate.currentLight = Plant.currentLight;
                 //plantBeforeUpdate.maxLight = Plant.maxLight;
+                
+                plantBeforeUpdate.currentLight = board.analogRead(11)
+                
             }
         });
     })
