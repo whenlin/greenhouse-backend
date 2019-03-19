@@ -9,17 +9,9 @@ var bodyParser = require('body-parser');
 const cors = require('cors');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-var plant = require('./app/models/Plant.js');
-
-
-  // Create a standard `led` component instance
- // var led = new five.Led(13);
-  board.pinMode(11, five.Pin.PWM);
-  
-
 var User = require('./app/models/User');
 var Plant = require('./app/models/Plant');
-
+var plant = require('./app/models/Plant');
 var port = 3000;
 
 // DATABASE SETUP
@@ -46,6 +38,19 @@ var port = 3000;
     app.use(bodyParser.json({ limit: '20mb' }));
     app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
     app.use(cors());
+
+
+  // Create a standard `led` component instance
+ // var led = new five.Led(13);
+  board.pinMode(11, five.Pin.PWM);
+  var photoResistor = new five.Sensor("A0");
+  
+  photoResistor.on('change', function() {
+      var lightReading = this.scaleTo(0,255);
+      console.log(lightReading);
+  })
+
+
     
     app.post('/createUser', function(req, response, next){
         
@@ -203,19 +208,19 @@ var port = 3000;
                     case '4':
                         // code
                         board.analogWrite(11, 204);
-                        res.send("Light has been set!");
+                        res.json("Light has been set!");
                         break;
                     
                     case '5':
                         // code
                         board.analogWrite(11, 255);
-                        res.send("Light has been set!");
+                        res.json("Light has been set!");
                         break;
                     
-                    default:
+                    case '0':
                         // code
                     board.analogWrite(11, 0);
-                    res.send("Light has been set!");
+                    res.json("Light has been set!");
                 }
         
         // plant.findById(req.params._id, function(err, Plant) {
@@ -411,30 +416,40 @@ var port = 3000;
         
     })
     
-    .get('/sunlightInfo/:_id', function(req, res, next){
-        plant.findById(req.params._id, function(err, Plant) {
-            if (err) {
-                res.send(err);
-            } else {
-                var plantBeforeUpdate = new plant();
-                plantBeforeUpdate._id = Plant._id;
-                plantBeforeUpdate.plantName = Plant.plantName;
-                plantBeforeUpdate.plantType = Plant.plantType;
-                //plantBeforeUpdate.minTemperature = Plant.minTemperature; //the temp that the user set from their mobile app
-                plantBeforeUpdate.currentTemperature = Plant.currentTemperature;
-                //plantBeforeUpdate.maxTemperature = Plant.maxTemperature;
-                //plantBeforeUpdate.minMoisture = Plant.minMoisture;   //the moisture setting that the user set from their mobile app
-                plantBeforeUpdate.currentMoisture = Plant.currentMoisture;
-                //plantBeforeUpdate.maxMoisture = Plant.maxMoisture;
-                //plantBeforeUpdate.minLight = Plant.minLight;
-                plantBeforeUpdate.currentLight = Plant.currentLight;
-                //plantBeforeUpdate.maxLight = Plant.maxLight;
-                
-                //plantBeforeUpdate.currentLight = board.analogRead(11)
-                //res.json({currentLight: plant})
-                
-            }
+    .get('/getLight/', function(req, res, next){
+        var lightReading;
+        // "data" get the current reading from the photoresistor
+        photoResistor.on("data", function() {
+            
+            lightReading = this.value;
+            console.log(lightReading);
         });
+        
+            res.json({light: lightReading});
+            
+        // plant.findById(req.params._id, function(err, Plant) {
+        //     if (err) {
+        //         res.send(err);
+        //     } else {
+        //         var plantBeforeUpdate = new plant();
+        //         plantBeforeUpdate._id = Plant._id;
+        //         plantBeforeUpdate.plantName = Plant.plantName;
+        //         plantBeforeUpdate.plantType = Plant.plantType;
+        //         plantBeforeUpdate.minTemperature = Plant.minTemperature; //the temp that the user set from their mobile app
+        //         plantBeforeUpdate.currentTemperature = Plant.currentTemperature;
+        //         plantBeforeUpdate.maxTemperature = Plant.maxTemperature;
+        //         plantBeforeUpdate.minMoisture = Plant.minMoisture;   //the moisture setting that the user set from their mobile app
+        //         plantBeforeUpdate.currentMoisture = Plant.currentMoisture;
+        //         plantBeforeUpdate.maxMoisture = Plant.maxMoisture;
+        //         plantBeforeUpdate.minLight = Plant.minLight;
+        //         plantBeforeUpdate.currentLight = Plant.currentLight;
+        //         plantBeforeUpdate.maxLight = Plant.maxLight;
+                
+        //         plantBeforeUpdate.currentLight = board.analogRead(11)
+        //         res.json({currentLight: plant})
+                
+        //     }
+        // });
     })
     
     .get('/moistureInfo/:_id', function(req, res, next){
