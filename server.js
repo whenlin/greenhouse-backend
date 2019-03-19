@@ -422,7 +422,7 @@ var port = 3000;
         photoResistor.on("data", function() {
             
             lightReading = this.value;
-            console.log(lightReading);
+            //
             res.json({light: lightReading});
         });
         
