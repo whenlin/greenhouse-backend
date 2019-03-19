@@ -1,28 +1,21 @@
+const five = require('johnny-five');
+const board = new five.Board({repl: false});     //defining the arduino board
+
+board.on("ready", function() {
+    
 var express = require('express');
 var app = express();    
 var bodyParser = require('body-parser');
 const cors = require('cors');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-
 var plant = require('./app/models/Plant.js');
 
-const five = require('johnny-five');
-
-const board = new five.Board({repl: false});     //defining the arduino board
-
-board.on("ready", function() {
 
   // Create a standard `led` component instance
  // var led = new five.Led(13);
   board.pinMode(11, five.Pin.PWM);
   
-  // "blink" the led in 500ms
-  // on-off phase periods
- // led.blink(500);
-
-
-//Going to need to install johnny-five package when ready in order to connect and communicate with arduino board!!!!!!!!!!!
 
 var User = require('./app/models/User');
 var Plant = require('./app/models/Plant');
@@ -205,6 +198,8 @@ var port = 3000;
                 //plantBeforeUpdate.minLight = Plant.minLight;
                 plantBeforeUpdate.currentLight = Plant.currentLight;
                // plantBeforeUpdate.maxLight = Plant.maxLight;
+                
+                console.log(plantBeforeUpdate.currentLight);
                 
                 switch (plantBeforeUpdate.currentLight) {
                     
@@ -486,9 +481,6 @@ var port = 3000;
         });
     });
    
-   
-   
-    
     
         app.listen(port, function() 
     {
