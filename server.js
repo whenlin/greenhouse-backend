@@ -423,9 +423,10 @@ var port = 3000;
             
             lightReading = this.value;
             console.log(lightReading);
+            res.json({light: lightReading});
         });
         
-            res.json({light: lightReading});
+            
             
         // plant.findById(req.params._id, function(err, Plant) {
         //     if (err) {
