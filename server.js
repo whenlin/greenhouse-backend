@@ -47,7 +47,7 @@ var port = 3000;
   
   photoResistor.on('change', function() {
       var lightReading = this.scaleTo(0,255);
-      console.log(lightReading);
+      //console.log(lightReading);
   })
 
 
