@@ -176,37 +176,16 @@ var port = 3000;
             });
     })
     
-    .post('/setLight/:_id', function(req, res, next){
+    .post('/setLight/', function(req, res, next){   //THE ID PARAM WAS REMOVED FOR TESTING, ADD IT BACK WHEN THE DB IS READY
         
         console.log("Set light route has been reached!");
         
-        plant.findById(req.params._id, function(err, Plant) {
-            if (err) {
-                res.send(err);
-                throw err;
-            } else {
-                var plantBeforeUpdate = new plant();
-                plantBeforeUpdate._id = Plant._id;
-                // plantBeforeUpdate.plantName = Plant.plantName;
-                // plantBeforeUpdate.plantType = Plant.plantType;
-                // plantBeforeUpdate.minTemperature = Plant.minTemperature; //the temp that the user set from their mobile app
-                // plantBeforeUpdate.currentTemperature = Plant.currentTemperature;
-                // plantBeforeUpdate.maxTemperature = Plant.maxTemperature;
-                // plantBeforeUpdate.minMoisture = Plant.minMoisture;   //the moisture setting that the user set from their mobile app
-                // plantBeforeUpdate.currentMoisture = Plant.currentMoisture;
-                // plantBeforeUpdate.maxMoisture = Plant.maxMoisture;
-                //plantBeforeUpdate.minLight = Plant.minLight;
-                plantBeforeUpdate.currentLight = Plant.currentLight;
-               // plantBeforeUpdate.maxLight = Plant.maxLight;
-                
-                console.log(plantBeforeUpdate.currentLight);
-                
-                switch (plantBeforeUpdate.currentLight) {
+        switch (req.body.currentLight) {
                     
                     case '1':
                         // code
                         board.analogWrite(11, 51);
-                        res.send("Light has been set!");
+                        res.send("Light has been set to 51!");
                         break;
                     
                     case '2':
@@ -218,6 +197,7 @@ var port = 3000;
                     case '3':
                         // code
                         board.analogWrite(11, 153);
+                        res.send("Light has been set!");
                         break;
                     
                     case '4':
@@ -237,9 +217,69 @@ var port = 3000;
                     board.analogWrite(11, 0);
                     res.send("Light has been set!");
                 }
+        
+        // plant.findById(req.params._id, function(err, Plant) {
+        //     if (err) {
+        //         res.send(err);
+        //         console.log(err);
+        //         throw err;
+        //     } else {
+        //         var plantBeforeUpdate = new plant();
+        //         plantBeforeUpdate._id = Plant._id;
+        //         plantBeforeUpdate.plantName = Plant.plantName;
+        //         plantBeforeUpdate.plantType = Plant.plantType;
+        //         plantBeforeUpdate.minTemperature = Plant.minTemperature; //the temp that the user set from their mobile app
+        //         plantBeforeUpdate.currentTemperature = Plant.currentTemperature;
+        //         plantBeforeUpdate.maxTemperature = Plant.maxTemperature;
+        //         plantBeforeUpdate.minMoisture = Plant.minMoisture;   //the moisture setting that the user set from their mobile app
+        //         plantBeforeUpdate.currentMoisture = Plant.currentMoisture;
+        //         plantBeforeUpdate.maxMoisture = Plant.maxMoisture;
+        //         plantBeforeUpdate.minLight = Plant.minLight;
+        //         plantBeforeUpdate.currentLight = Plant.currentLight;
+        //         plantBeforeUpdate.maxLight = Plant.maxLight;
                 
-            }
-        });
+        //         console.log(plantBeforeUpdate.currentLight);
+                
+        //         switch (plantBeforeUpdate.currentLight) {
+                    
+        //             case '1':
+        //                 // code
+        //                 board.analogWrite(11, 51);
+        //                 res.send("Light has been set!");
+        //                 break;
+                    
+        //             case '2':
+        //                 // code
+        //                 board.analogWrite(11, 102);
+        //                 res.send("Light has been set!");
+        //                 break;
+                    
+        //             case '3':
+        //                 // code
+        //                 board.analogWrite(11, 153);
+        //                 res.send("Light has been set!");
+        //                 break;
+                    
+        //             case '4':
+        //                 // code
+        //                 board.analogWrite(11, 204);
+        //                 res.send("Light has been set!");
+        //                 break;
+                    
+        //             case '5':
+        //                 // code
+        //                 board.analogWrite(11, 255);
+        //                 res.send("Light has been set!");
+        //                 break;
+                    
+        //             default:
+        //                 // code
+        //             board.analogWrite(11, 0);
+        //             res.send("Light has been set!");
+        //         }
+                
+        //     }
+        // });
     })
     
     .post('/setMoisture/:_id', function(req, res, next){
