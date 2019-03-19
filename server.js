@@ -416,16 +416,20 @@ var port = 3000;
         
     })
     
+    
     .get('/getLight/', function(req, res, next){
         var lightReading;
+        
+        
         // "data" get the current reading from the photoresistor
         photoResistor.on("data", function() {
             lightReading = this.scaleTo(0, 255);
-            
-            res.json({light: lightReading});
         });
         
-            
+        setTimeout(function(){
+            res.json({light: lightReading});  
+        }, 3000);
+          
             
         // plant.findById(req.params._id, function(err, Plant) {
         //     if (err) {
