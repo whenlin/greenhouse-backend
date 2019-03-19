@@ -420,9 +420,8 @@ var port = 3000;
         var lightReading;
         // "data" get the current reading from the photoresistor
         photoResistor.on("data", function() {
+            lightReading = this.scaleTo(0, 255);
             
-            lightReading = this.value;
-            //
             res.json({light: lightReading});
         });
         
