@@ -20,14 +20,14 @@ board.on("ready", function() {
   // "blink" the led in 500ms
   // on-off phase periods
  // led.blink(500);
-});
+
 
 //Going to need to install johnny-five package when ready in order to connect and communicate with arduino board!!!!!!!!!!!
 
 var User = require('./app/models/User');
 var Plant = require('./app/models/Plant');
 
-var port = 8080;
+var port = 3000;
 
 // DATABASE SETUP
     var mongoose   = require('mongoose');
@@ -184,9 +184,13 @@ var port = 8080;
     })
     
     .post('/setLight/:_id', function(req, res, next){
+        
+        console.log("Set light route has been reached!");
+        
         plant.findById(req.params._id, function(err, Plant) {
             if (err) {
                 res.send(err);
+                throw err;
             } else {
                 var plantBeforeUpdate = new plant();
                 plantBeforeUpdate._id = Plant._id;
@@ -333,10 +337,12 @@ var port = 8080;
                             
                     case '4':
                         // code
+                        //board.analogWrite(13, 204)
                         break;
                             
                     case '5':
                         // code
+                        //board.analogWrite(13, 255)
                         break;
                             
                     default:
@@ -389,7 +395,8 @@ var port = 8080;
                 plantBeforeUpdate.currentLight = Plant.currentLight;
                 //plantBeforeUpdate.maxLight = Plant.maxLight;
                 
-                plantBeforeUpdate.currentLight = board.analogRead(11)
+                //plantBeforeUpdate.currentLight = board.analogRead(11)
+                //res.json({currentLight: plant})
                 
             }
         });
@@ -478,9 +485,14 @@ var port = 8080;
             }
         });
     });
+   
+   
+   
     
     
-    app.listen(port, function() 
-{
-    console.log('The server is listening on port ' + port);
-});
+        app.listen(port, function() 
+    {
+        console.log('The server is listening on port ' + port);
+    });
+
+}); //this is the closing brackets of the board("ready") function,  just doing this to check smthn
