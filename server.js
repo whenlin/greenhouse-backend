@@ -9,7 +9,7 @@ var plant = require('./app/models/Plant.js');
 
 const five = require('johnny-five');
 
-const board = new five.Board({repl: false, debug: false});     //defining the arduino board
+const board = new five.Board({repl: false});     //defining the arduino board
 
 board.on("ready", function() {
 
@@ -207,11 +207,13 @@ var port = 8080;
                     case '1':
                         // code
                         board.analogWrite(11, 51);
+                        res.send("Light has been set!");
                         break;
                     
                     case '2':
                         // code
                         board.analogWrite(11, 102);
+                        res.send("Light has been set!");
                         break;
                     
                     case '3':
@@ -222,17 +224,19 @@ var port = 8080;
                     case '4':
                         // code
                         board.analogWrite(11, 204);
+                        res.send("Light has been set!");
                         break;
                     
                     case '5':
                         // code
                         board.analogWrite(11, 255);
+                        res.send("Light has been set!");
                         break;
                     
                     default:
                         // code
                     board.analogWrite(11, 0);
-    
+                    res.send("Light has been set!");
                 }
                 
             }
@@ -259,33 +263,34 @@ var port = 8080;
                 //plantBeforeUpdate.maxLight = Plant.maxLight;
                 
                 switch (plantBeforeUpdate.currentMoisture) {
-                    case '0':
-                        // code
-                        board.analogWrite(12, 51)
-                        break;
-                            
                     case '1':
                         // code
+                        //board.analogWrite(12, 51)
                         break;
                             
                     case '2':
                         // code
+                        //board.analogWrite(12, 102)
                         break;
                             
                     case '3':
                         // code
+                        //board.analogWrite(12, 153)
                         break;
                             
                     case '4':
                         // code
+                        //board.analogWrite(12, 204)
                         break;
                             
                     case '5':
                         // code
+                        //board.analogWrite(12, 255)
                         break;
                             
                     default:
                         // code
+                        //board.analogWrite(12, 0)
                 }
             }
         });
@@ -311,20 +316,19 @@ var port = 8080;
                 //plantBeforeUpdate.maxLight = Plant.maxLight;
                 
                 switch (plantBeforeUpdate.currentMoisture) {
-                    case '0':
-                        // code
-                        break;
-                            
                     case '1':
                         // code
+                        //board.analogWrite(13, 51)
                         break;
                             
                     case '2':
                         // code
+                        //board.analogWrite(13, 102)
                         break;
                             
                     case '3':
                         // code
+                        //board.analogWrite(13, 153)
                         break;
                             
                     case '4':
