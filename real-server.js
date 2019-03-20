@@ -1,3 +1,8 @@
+const five = require('johnny-five');
+const board = new five.Board({repl: false});     //defining the arduino board
+
+ board.on("ready", function() {
+     
 var express = require('express');
 var app = express();    
 var bodyParser = require('body-parser');
@@ -7,7 +12,7 @@ const saltRounds = 10;
 var User = require('./app/models/User');
 var Plant = require('./app/models/Plant');
 var plant = require('./app/models/Plant');
-var port = 8080;
+var port = 3000;
 
 // DATABASE SETUP
     var mongoose   = require('mongoose');
@@ -38,6 +43,59 @@ var port = 8080;
         //UNCOMMENT BELOW AFTER TESTING
 
   // Create a standard `led` component instance
+  var led = new five.Led(13);
+  
+  board.pinMode(11, five.Pin.PWM);
+  
+  //board.pinMode(12, five.Pin.PMW);
+  
+  var photoResistor = new five.Sensor("A0");
+  
+  /*var multiSensor = new five.Multi({
+      controller: "HTU21D"
+  });
+  
+  Or if we go with thermometer:
+  var thermometer = new five.Thermometer({
+    pin: "A1"
+  });
+  */
+  
+  //photoResistor.on('change', function() {
+      //var lightReading = this.scaleTo(0,255);
+      //console.log(lightReading);
+  //})
+  
+    /*Board loop implementation
+    board.loop(500, () => {
+        var lightReading;
+        var tempReading;
+        photoResistor.on("data", function() {
+            lightReading = this.scaleTo(0, 255);
+        });
+        
+        thermometer.on("data", function() {
+            tempReading = this.C;
+        });
+        
+        plant.find({}).toArray(function(plantArray) {
+                for(var p in plantArray) {
+                    var lightLevel = p.currentLight;
+                    var tempLevel = p.currentTemperature;
+                    
+                    var lightOutput = (parseInt(lightLevel) * 51) - lightReading;
+                    if (lightOutput > 0) {
+                        board.analogWrite(11, lightOutput);
+                    } else {
+                        board.analogWrite(11, 0);
+                    }
+                    
+                    if
+                }
+            });
+        })
+    */
+
 
     
     app.post('/createUser', function(req, response, next){
@@ -173,6 +231,43 @@ var port = 8080;
         
         console.log("Set light route has been reached!");
         
+        switch (req.body.currentLight) {
+                    
+                    case '1':
+                        // code
+                        board.analogWrite(11, 51);
+                        res.send("Light has been set to 51!");
+                        break;
+                    
+                    case '2':
+                        // code
+                        board.analogWrite(11, 102);
+                        res.send("Light has been set!");
+                        break;
+                    
+                    case '3':
+                        // code
+                        board.analogWrite(11, 153);
+                        res.send("Light has been set!");
+                        break;
+                    
+                    case '4':
+                        // code
+                        board.analogWrite(11, 204);
+                        res.json("Light has been set!");
+                        break;
+                    
+                    case '5':
+                        // code
+                        board.analogWrite(11, 255);
+                        res.json("Light has been set!");
+                        break;
+                    
+                    case '0':
+                        // code
+                    board.analogWrite(11, 0);
+                    res.json("Light has been set!");
+                }
         
         // plant.findById(req.params._id, function(err, Plant) {
         //     if (err) {
@@ -310,6 +405,9 @@ var port = 8080;
                 plantBeforeUpdate.currentLight = Plant.currentLight;
                 //plantBeforeUpdate.maxLight = Plant.maxLight;
                 
+                /*multiSensor.on("data", function(){
+                    temperatureReading = this.thermometer.celsius;
+                */
                 switch (plantBeforeUpdate.currentMoisture) {
                     case '1':
                         // code
@@ -344,28 +442,23 @@ var port = 8080;
     })
     
     .post('/updatePlantInfo/:_id', function(req, res, next){
-        console.log('Plant info being updated');
-        console.log(req.body);
-        
         plant.findById(req.params._id, function(err, Plant) {
             if (err) {
-                console.log(err);
                 res.send(err);
-                throw err;
             } else {
-               
-               Plant.currentTemperature = req.body.currentTemperature;
-               Plant.currentLight = req.body.currentLight;
-               
-               Plant.save(function(err){
-                   if(err){
-                       console.log(err);
-                       throw err;
-                   } else {
-                       console.log("New temperature: " + Plant.currentTemperature + "\nNew light setting: " + Plant.currentLight);
-                       res.json(Plant);
-                   }
-               });
+                var plantBeforeUpdate = new plant();
+                plantBeforeUpdate._id = Plant._id;
+                plantBeforeUpdate.plantName = Plant.plantName;
+                plantBeforeUpdate.plantType = Plant.plantType;
+                //plantBeforeUpdate.minTemperature = Plant.minTemperature; //the temp that the user set from their mobile app
+                plantBeforeUpdate.currentTemperature = Plant.currentTemperature;
+                //plantBeforeUpdate.maxTemperature = Plant.maxTemperature;
+                //plantBeforeUpdate.minMoisture = Plant.minMoisture;   //the moisture setting that the user set from their mobile app
+                plantBeforeUpdate.currentMoisture = Plant.currentMoisture;
+                //plantBeforeUpdate.maxMoisture = Plant.maxMoisture;
+                //plantBeforeUpdate.minLight = Plant.minLight;
+                plantBeforeUpdate.currentLight = Plant.currentLight;
+                //plantBeforeUpdate.maxLight = Plant.maxLight;
                 
             }
         });
@@ -376,6 +469,17 @@ var port = 8080;
     .get('/getLight/', function(req, res, next){
         var lightReading;
         
+        
+        // "data" get the current reading from the photoresistor
+        photoResistor.on("data", function() {
+            lightReading = this.scaleTo(0, 255);
+        });
+        
+        setTimeout(function(){
+            res.json({light: lightReading});  
+        }, 3000);
+          
+            
         // plant.findById(req.params._id, function(err, Plant) {
         //     if (err) {
         //         res.send(err);
@@ -419,6 +523,14 @@ var port = 8080;
                 //plantBeforeUpdate.minLight = Plant.minLight;
                 plantBeforeUpdate.currentLight = Plant.currentLight;
                 //plantBeforeUpdate.maxLight = Plant.maxLight;
+                
+                /*multiSensor.on("data", function(){
+                    moistureReading = this.hygrometer.relativeHumidity;
+                });
+                setTimeout(function(){
+                    res.json({moisture: moistureReading});  
+                }, 3000);
+                */
             }
         });
     })
@@ -441,6 +553,14 @@ var port = 8080;
                 //plantBeforeUpdate.minLight = Plant.minLight;
                 plantBeforeUpdate.currentLight = Plant.currentLight;
                 //plantBeforeUpdate.maxLight = Plant.maxLight;
+                
+                /*multiSensor.on("data", function(){
+                    temperatureReading = this.thermometer.celsius;
+                });
+                setTimeout(function(){
+                    res.json({temperature: temperatureReading});  
+                }, 3000);
+                */
             }
         });
     })
@@ -490,4 +610,6 @@ var port = 8080;
     {
         console.log('The server is listening on port ' + port);
     });
-     //this is the closing brackets of the board("ready") function,  just doing this to check smthn
+    
+
+}); //this is the closing brackets of the board("ready") function,  just doing this to check smthn
