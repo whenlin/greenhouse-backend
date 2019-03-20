@@ -49,11 +49,16 @@ var port = 3000;
   
   //board.pinMode(12, five.Pin.OUTPUT);
   
-  var photoResistor = new five.Sensor("A0");
+  var photoResistor = new five.Sensor("A1");
   
-  /*var multiSensor = new five.Multi({
+  /*
+  var photoResistor = new five.Sensor("A1");
+  var photoResistor = new five.Sensor("A1");
+  var photoResistor = new five.Sensor("A1");
+  
+  multiSensor = new five.Multi({
       controller: "DHT11_I2C_NANO_BACKPACK",
-      pin: "A1"
+      pin: "A4"
   });
   
   Or if we go with thermometer:
