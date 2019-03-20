@@ -47,12 +47,13 @@ var port = 3000;
   
   board.pinMode(11, five.Pin.PWM);
   
-  //board.pinMode(12, five.Pin.PMW);
+  //board.pinMode(12, five.Pin.OUTPUT);
   
   var photoResistor = new five.Sensor("A0");
   
   /*var multiSensor = new five.Multi({
-      controller: "HTU21D"
+      controller: "DHT11_I2C_NANO_BACKPACK",
+      pin: "A1"
   });
   
   Or if we go with thermometer:
@@ -74,8 +75,8 @@ var port = 3000;
             lightReading = this.scaleTo(0, 255);
         });
         
-        thermometer.on("data", function() {
-            tempReading = this.C;
+        multiSensor.on("data", function() {
+            tempReading = this.thermometer.celsius;
         });
         
         plant.find({}).toArray(function(plantArray) {
@@ -90,7 +91,11 @@ var port = 3000;
                         board.analogWrite(11, 0);
                     }
                     
-                    if
+                    if(tempReading < tempLevel) {
+                        board.analogWrite(12, 1);
+                    } else {
+                        board.analogWrite(12, 0)
+                    }
                 }
             });
         })
@@ -235,38 +240,42 @@ var port = 3000;
                     
                     case '1':
                         // code
-                        board.analogWrite(11, 51);
+                        board.analogWrite(1, 51);
                         res.send("Light has been set to 51!");
                         break;
                     
                     case '2':
                         // code
-                        board.analogWrite(11, 102);
+                        board.analogWrite(1, 102);
                         res.send("Light has been set!");
                         break;
                     
                     case '3':
                         // code
-                        board.analogWrite(11, 153);
+                        board.analogWrite(1, 153);
                         res.send("Light has been set!");
                         break;
                     
                     case '4':
                         // code
-                        board.analogWrite(11, 204);
+                        board.analogWrite(1, 204);
                         res.json("Light has been set!");
                         break;
                     
                     case '5':
                         // code
-                        board.analogWrite(11, 255);
+                        board.analogWrite(1, 255);
                         res.json("Light has been set!");
                         break;
                     
+                    default:
+                    
                     case '0':
                         // code
-                    board.analogWrite(11, 0);
+                    board.analogWrite(1, 0);
                     res.json("Light has been set!");
+                    
+                    
                 }
         
         // plant.findById(req.params._id, function(err, Plant) {

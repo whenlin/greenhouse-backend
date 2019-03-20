@@ -172,7 +172,7 @@ var port = 8080;
     .post('/setLight/', function(req, res, next){   //THE ID PARAM WAS REMOVED FOR TESTING, ADD IT BACK WHEN THE DB IS READY
         
         console.log("Set light route has been reached!");
-        
+         
         
         // plant.findById(req.params._id, function(err, Plant) {
         //     if (err) {
