@@ -49,34 +49,56 @@ var port = 3000;
   
   //board.pinMode(12, five.Pin.OUTPUT);
   
-  var photoResistor = new five.Sensor("A1");
+  var photoResistor0 = new five.Sensor("A0");
+  var photoResistor1 = new five.Sensor("A1");
+  var photoResistor2 = new five.Sensor("A2");
+  var photoResistor3 = new five.Sensor("A3");
   
-  /*
-  var photoResistor = new five.Sensor("A0");
-  var photoResistor = new five.Sensor("A2");
-  var photoResistor = new five.Sensor("A3");
-  multiSensor = new five.Multi({
+  const temperatureSensor = new five.Sensor({
+    pin: 'A1',
+    threshold: 4
+  });
+  
+  /*multiSensor = new five.Multi({
       controller: "DHT11_I2C_NANO_BACKPACK",
-      pin: "A4"
+      pin: "3"
   });
   */
   
-  photoResistor.on('change', function() {
+  temperatureSensor.on('change', (value) => {
+    
+    let Vo = value;
+    const R1 = 10000;
+    let logR2, R2, T;
+    const c1 = 1.009249522e-03;
+    const c2 = 2.378405444e-04;
+    const c3 = 2.019202697e-07;
+    R2 = R1 * (1023.0 / Vo - 1.0);
+    logR2 = Math.log(R2);
+    T = (1.0 / (c1 + c2 * logR2 + c3 * logR2 * logR2 * logR2));
+    T = T - 273.15;
+    T = (T * 9.0) / 5.0 + 32.0;
+    T = (T - 32) * (5 / 9);
+    
+    console.log("Temperature: " + T.toFixed(2));
+    
+  });
+  
+  
+  photoResistor1.on('change', function() {
       var lightReading = this.value; //this.scaleTo(0,255);
       console.log(lightReading);
   })
   
-    /*Board loop implementation
+    /*Board loop implementation*/
     board.loop(500, () => {
         var lightReading;
         var tempReading;
-        photoResistor.on("data", function() {
+        photoResistor1.on("data", function() {
             lightReading = this.scaleTo(0, 255);
         });
         
-        multiSensor.on("data", function() {
-            tempReading = this.thermometer.celsius;
-        });
+        
         
         plant.find({}).toArray(function(plantArray) {
                 for(var p in plantArray) {
@@ -97,8 +119,7 @@ var port = 3000;
                     }
                 }
             });
-        })
-    */
+        });
 
 
     
