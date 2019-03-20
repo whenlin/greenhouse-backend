@@ -52,25 +52,19 @@ var port = 3000;
   var photoResistor = new five.Sensor("A1");
   
   /*
-  var photoResistor = new five.Sensor("A1");
-  var photoResistor = new five.Sensor("A1");
-  var photoResistor = new five.Sensor("A1");
-  
+  var photoResistor = new five.Sensor("A0");
+  var photoResistor = new five.Sensor("A2");
+  var photoResistor = new five.Sensor("A3");
   multiSensor = new five.Multi({
       controller: "DHT11_I2C_NANO_BACKPACK",
       pin: "A4"
   });
-  
-  Or if we go with thermometer:
-  var thermometer = new five.Thermometer({
-    pin: "A1"
-  });
   */
   
-  //photoResistor.on('change', function() {
-      //var lightReading = this.scaleTo(0,255);
-      //console.log(lightReading);
-  //})
+  photoResistor.on('change', function() {
+      var lightReading = this.scaleTo(0,255);
+      console.log(lightReading);
+  })
   
     /*Board loop implementation
     board.loop(500, () => {
@@ -486,7 +480,7 @@ var port = 3000;
         
         // "data" get the current reading from the photoresistor
         photoResistor.on("data", function() {
-            lightReading = this.scaleTo(0, 255);
+            lightReading = this.value;//.scaleTo(0, 255);
         });
         
         setTimeout(function(){
