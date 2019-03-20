@@ -100,7 +100,7 @@ var port = 3000;
         
         
         
-        plant.find({}).toArray(function(plantArray) {
+        /*plant.find({}).toArray(function(plantArray) {
                 for(var p in plantArray) {
                     var lightLevel = p.currentLight;
                     var tempLevel = p.currentTemperature;
@@ -118,7 +118,7 @@ var port = 3000;
                         board.analogWrite(12, 0)
                     }
                 }
-            });
+            });*/
         });
 
 
