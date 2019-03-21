@@ -112,19 +112,59 @@ var port = 3000;
         
         photoResistor0.on("data", function() {
             lightReading0 = this.scaleTo(0, 255);
-            console.log("Photoresistor0: " + lightReading0);
+            //console.log("Photoresistor0: " + lightReading0);
         });
         photoResistor1.on("data", function() {
             lightReading1 = this.scaleTo(0, 255);
-            console.log("Photoresistor1: " + lightReading1);
+            //console.log("Photoresistor1: " + lightReading1);
         });
         photoResistor2.on("data", function() {
             lightReading2 = this.scaleTo(0, 255);
-            console.log("Photoresistor2: " + lightReading2);
+            //console.log("Photoresistor2: " + lightReading2);
         });
         photoResistor3.on("data", function() {
-            lightReading3 = this.scaleTo(0, 255);
-            console.log("Photoresistor3: " + lightReading3);
+          lightReading3 = this.scaleTo(0, 255);
+          var lightLevel = currentLight;
+          //  console.log("Photoresistor3: " + lightReading3);
+          var lightOutput0 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
+          var lightOutput1 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
+          var lightOutput2 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
+          var lightOutput3 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
+          
+          if (lightOutput0 > 0 && lightOutput0 <= 255) {
+                        board.analogWrite(3, lightOutput0);
+                    } else if (lightOutput0 > 255) {
+                        board.analogWrite(3,255);
+                    } else {
+                        board.analogWrite(3, 0);
+                    }
+                    if (lightOutput1 > 0 && lightOutput1 <= 255) {
+                        board.analogWrite(5, lightOutput1);
+                    } else if (lightOutput0 > 255) {
+                        board.analogWrite(5,255);
+                    } else {
+                        board.analogWrite(5, 0);
+                    }
+                    if (lightOutput2 > 0 && lightOutput2 <= 255) {
+                        board.analogWrite(6, lightOutput2);
+                    } else if (lightOutput0 > 255) {
+                        board.analogWrite(6,255);
+                    } else {
+                        board.analogWrite(6, 0);
+                    }
+                    if (lightOutput3 > 0 && lightOutput3 <= 255) {
+                        board.analogWrite(11, lightOutput3);
+                    } else if (lightOutput0 > 255) {
+                        board.analogWrite(11,255);
+                    } else {
+                        board.analogWrite(11, 0);
+                    }
+                    
+                    if(tempReading < 30) {
+                        heatingPad.high();
+                    } else {
+                        heatingPad.low();
+                    }
         });
         
         
@@ -135,44 +175,46 @@ var port = 3000;
         }
         
         /*plant.find({}).toArray(function(plantArray) {
-                for(var p in plantArray) {*/
+                for(var p in plantArray) {
                     var lightLevel = currentLight;
                     var tempLevel = currentTemperature;
                     
-                    var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading0 / 4);
-                    var lightOutput1 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
-                    var lightOutput2 = (parseInt(lightLevel) * 51) - (lightReading2 / 4);
-                    var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading3 / 4);
+                    console.log("currentLight:"+currentLight);
+                    
+                    var lightOutput0 = (lightReading0 / 4) - (parseInt(lightLevel) * 51);
+                    var lightOutput1 = (lightReading1 / 4) - (parseInt(lightLevel) * 51);
+                    var lightOutput2 = (lightReading2 / 4) - (parseInt(lightLevel) * 51);
+                    var lightOutput3 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
                     
                     console.log("lightOutput0: "+lightOutput0)
                     console.log("lightOutput1: "+lightOutput1)
                     console.log("lightOutput2: "+lightOutput2)
                     console.log("lightOutput3: "+lightOutput3)
                     
-                    if (lightOutput0 > 0 && lightOutput0 < 255) {
+                    if (lightOutput0 > 0 && lightOutput0 <= 255) {
                         board.analogWrite(3, lightOutput0);
-                    } else if (lightOutput0 > 0) {
+                    } else if (lightOutput0 > 255) {
                         board.analogWrite(3,255);
                     } else {
                         board.analogWrite(3, 0);
                     }
-                    if (lightOutput1 > 0 && lightOutput1 < 255) {
+                    if (lightOutput1 > 0 && lightOutput1 <= 255) {
                         board.analogWrite(5, lightOutput1);
-                    } else if (lightOutput0 > 0) {
+                    } else if (lightOutput0 > 255) {
                         board.analogWrite(5,255);
                     } else {
                         board.analogWrite(5, 0);
                     }
-                    if (lightOutput2 > 0 && lightOutput2 < 255) {
+                    if (lightOutput2 > 0 && lightOutput2 <= 255) {
                         board.analogWrite(6, lightOutput2);
-                    } else if (lightOutput0 > 0) {
+                    } else if (lightOutput0 > 255) {
                         board.analogWrite(6,255);
                     } else {
                         board.analogWrite(6, 0);
                     }
-                    if (lightOutput3 > 0 && lightOutput3 < 255) {
+                    if (lightOutput3 > 0 && lightOutput3 <= 255) {
                         board.analogWrite(11, lightOutput3);
-                    } else if (lightOutput0 > 0) {
+                    } else if (lightOutput0 > 255) {
                         board.analogWrite(11,255);
                     } else {
                         board.analogWrite(11, 0);
@@ -184,7 +226,7 @@ var port = 3000;
                         heatingPad.low();
                     }
                 //}
-            //});
+            //});*/
             
         });
 
