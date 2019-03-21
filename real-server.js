@@ -59,11 +59,10 @@ var port = 3000;
     threshold: 4
   });
   
-  /*multiSensor = new five.Multi({
-      controller: "DHT11_I2C_NANO_BACKPACK",
-      pin: "3"
-  });
-  */
+  const heatingPad = new five.Pin(9);
+  
+  
+  
   
   temperatureSensor.on('change', (value) => {
     
@@ -91,34 +90,99 @@ var port = 3000;
   })
   
     /*Board loop implementation*/
-    board.loop(500, () => {
-        var lightReading;
+    board.loop(1000, () => {
+        var lightReading0;
+        var lightReading1;
+        var lightReading2;
+        var lightReading3;
+        
         var tempReading;
+        
+        
+        photoResistor0.on("data", function() {
+            lightReading0 = this.scaleTo(0, 255);
+        });
         photoResistor1.on("data", function() {
-            lightReading = this.scaleTo(0, 255);
+            lightReading1 = this.scaleTo(0, 255);
+        });
+        photoResistor2.on("data", function() {
+            lightReading2 = this.scaleTo(0, 255);
+        });
+        photoResistor3.on("data", function() {
+            lightReading3 = this.scaleTo(0, 255);
         });
         
+        temperatureSensor.on('data', (value) => {
+    
+            let Vo = value;
+            const R1 = 10000;
+            let logR2, R2, T;
+            const c1 = 1.009249522e-03;
+            const c2 = 2.378405444e-04;
+            const c3 = 2.019202697e-07;
+            R2 = R1 * (1023.0 / Vo - 1.0);
+            logR2 = Math.log(R2);
+            T = (1.0 / (c1 + c2 * logR2 + c3 * logR2 * logR2 * logR2));
+            T = T - 273.15;
+            T = (T * 9.0) / 5.0 + 32.0;
+            T = (T - 32) * (5 / 9);
+            
+            tempReading = T.toFixed(2);
+        });
         
+        if(tempReading < 30){
+            heatingPad.high();
+        } else {
+            heatingPad.low();
+        }
         
         /*plant.find({}).toArray(function(plantArray) {
                 for(var p in plantArray) {
                     var lightLevel = p.currentLight;
                     var tempLevel = p.currentTemperature;
                     
-                    var lightOutput = (parseInt(lightLevel) * 51) - lightReading;
-                    if (lightOutput > 0) {
+                    var lightOutput0 = (parseInt(lightLevel) * 51)/4 - lightReading0;
+                    var lightOutput1 = (parseInt(lightLevel) * 51)/4 - lightReading1;
+                    var lightOutput2 = (parseInt(lightLevel) * 51)/4 - lightReading2;
+                    var lightOutput3 = (parseInt(lightLevel) * 51)/4 - lightReading3;
+                    
+                    if (lightOutput0 > 0 && < 255) {
                         board.analogWrite(11, lightOutput);
+                    } else if (lightOutput0 > 0) {
+                        board.analogWrite(11,255);
+                    } else {
+                        board.analogWrite(11, 0);
+                    }
+                    if (lightOutput1 > 0 && < 255) {
+                        board.analogWrite(11, lightOutput);
+                    } else if (lightOutput0 > 0) {
+                        board.analogWrite(11,255);
+                    } else {
+                        board.analogWrite(11, 0);
+                    }
+                    if (lightOutput2 > 0 && < 255) {
+                        board.analogWrite(11, lightOutput);
+                    } else if (lightOutput0 > 0) {
+                        board.analogWrite(11,255);
+                    } else {
+                        board.analogWrite(11, 0);
+                    }
+                    if (lightOutput3 > 0 && < 255) {
+                        board.analogWrite(11, lightOutput);
+                    } else if (lightOutput0 > 0) {
+                        board.analogWrite(11,255);
                     } else {
                         board.analogWrite(11, 0);
                     }
                     
-                    if(tempReading < tempLevel) {
+                    if(tempReading < tempLevel*0.1) {
                         board.analogWrite(12, 1);
                     } else {
                         board.analogWrite(12, 0)
                     }
                 }
             });*/
+            
         });
 
 
