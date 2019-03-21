@@ -106,10 +106,10 @@ var port = 3000;
           var lightLevel = currentLight;
           console.log("LightReading3 "+lightReading3)
           //  console.log("Photoresistor3: " + lightReading3);
-          var lightOutput0 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
-          var lightOutput1 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
-          var lightOutput2 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
-          var lightOutput3 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
+          var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading3 / 4);
+          var lightOutput1 = (parseInt(lightLevel) * 51) - (lightReading3 / 4);
+          var lightOutput2 = (parseInt(lightLevel) * 51) - (lightReading3 / 4);
+          var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading3 / 4);
           
           console.log("lightOutput0: "+lightOutput0)
           console.log("lightOutput1: "+lightOutput1)
