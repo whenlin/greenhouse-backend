@@ -112,19 +112,23 @@ var port = 3000;
         
         photoResistor0.on("data", function() {
             lightReading0 = this.scaleTo(0, 255);
+            console.log("Photoresistor0: " + lightReading0);
         });
         photoResistor1.on("data", function() {
             lightReading1 = this.scaleTo(0, 255);
+            console.log("Photoresistor1: " + lightReading1);
         });
         photoResistor2.on("data", function() {
             lightReading2 = this.scaleTo(0, 255);
+            console.log("Photoresistor2: " + lightReading2);
         });
         photoResistor3.on("data", function() {
             lightReading3 = this.scaleTo(0, 255);
+            console.log("Photoresistor3: " + lightReading3);
         });
         
         
-        if(tempReading < 10){
+        if(tempReading < 30){
             heatingPad.high();
         } else {
             heatingPad.low();
@@ -135,10 +139,15 @@ var port = 3000;
                     var lightLevel = currentLight;
                     var tempLevel = currentTemperature;
                     
-                    var lightOutput0 = (parseInt(lightLevel) * 51) - lightReading0/4;
-                    var lightOutput1 = (parseInt(lightLevel) * 51) - lightReading1/4;
-                    var lightOutput2 = (parseInt(lightLevel) * 51) - lightReading2/4;
-                    var lightOutput3 = (parseInt(lightLevel) * 51) - lightReading3/4;
+                    var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading0 / 4);
+                    var lightOutput1 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
+                    var lightOutput2 = (parseInt(lightLevel) * 51) - (lightReading2 / 4);
+                    var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading3 / 4);
+                    
+                    console.log("lightOutput0: "+lightOutput0)
+                    console.log("lightOutput1: "+lightOutput1)
+                    console.log("lightOutput2: "+lightOutput2)
+                    console.log("lightOutput3: "+lightOutput3)
                     
                     if (lightOutput0 > 0 && lightOutput0 < 255) {
                         board.analogWrite(3, lightOutput0);
