@@ -43,7 +43,7 @@ var port = 3000;
         //UNCOMMENT BELOW AFTER TESTING
 
   // Create a standard `led` component instance
-  var led = new five.Led(13);
+  //var led = new five.Led(13);
   
   var currentLight;
   var currentTemperature;
@@ -64,8 +64,7 @@ var port = 3000;
   var photoResistor3 = new five.Sensor("A3");
   
   const temperatureSensor = new five.Sensor({
-    pin: 'A4',
-    threshold: 4
+    pin: 'A4'
   });
   
   photoResistor1.on('change', function() {
