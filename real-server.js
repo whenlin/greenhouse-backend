@@ -86,33 +86,12 @@ var port = 3000;
   
   photoResistor1.on('change', function() {
       var lightReading = this.value; //this.scaleTo(0,255);
-      console.log(lightReading);
-  })
+     // console.log(lightReading);
+  });
   
-    /*Board loop implementation*/
-    board.loop(1000, () => {
-        var lightReading0;
-        var lightReading1;
-        var lightReading2;
-        var lightReading3;
-        
-        var tempReading;
-        
-        
-        photoResistor0.on("data", function() {
-            lightReading0 = this.scaleTo(0, 255);
-        });
-        photoResistor1.on("data", function() {
-            lightReading1 = this.scaleTo(0, 255);
-        });
-        photoResistor2.on("data", function() {
-            lightReading2 = this.scaleTo(0, 255);
-        });
-        photoResistor3.on("data", function() {
-            lightReading3 = this.scaleTo(0, 255);
-        });
-        
-        temperatureSensor.on('data', (value) => {
+  var tempReading;
+  
+  temperatureSensor.on('change', (value) => {
     
             let Vo = value;
             const R1 = 10000;
@@ -128,7 +107,39 @@ var port = 3000;
             T = (T - 32) * (5 / 9);
             
             tempReading = T.toFixed(2);
+            
         });
+        
+        heatingPad.on("high", function(){
+            console.log("Heating pad set to high!!!!!");
+        });
+        
+        heatingPad.on("low", function(){
+            console.log("Heating pad set to low!!!!!");
+        });
+  
+    /*Board loop implementation*/
+    board.loop(1000, () => {
+        var lightReading0;
+        var lightReading1;
+        var lightReading2;
+        var lightReading3;
+        
+        
+        
+        photoResistor0.on("data", function() {
+            lightReading0 = this.scaleTo(0, 255);
+        });
+        photoResistor1.on("data", function() {
+            lightReading1 = this.scaleTo(0, 255);
+        });
+        photoResistor2.on("data", function() {
+            lightReading2 = this.scaleTo(0, 255);
+        });
+        photoResistor3.on("data", function() {
+            lightReading3 = this.scaleTo(0, 255);
+        });
+        
         
         if(tempReading < 30){
             heatingPad.high();
