@@ -111,10 +111,10 @@ var port = 3000;
           var lightOutput2 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
           var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
           
-          console.log("lightOutput0: "+lightOutput0)
-          console.log("lightOutput1: "+lightOutput1)
-          console.log("lightOutput2: "+lightOutput2)
-          console.log("lightOutput3: "+lightOutput3)
+        //   console.log("lightOutput0: "+lightOutput0)
+        //   console.log("lightOutput1: "+lightOutput1)
+        //   console.log("lightOutput2: "+lightOutput2)
+        //   console.log("lightOutput3: "+lightOutput3)
           
                     if (lightOutput0 > 0 && lightOutput0 <= 255) {
                         board.analogWrite(3, lightOutput0);
