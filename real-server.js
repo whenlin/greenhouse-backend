@@ -100,6 +100,45 @@ var port = 3000;
         heatingPad.on("low", function(){
             console.log("Heating pad set to low!!!!!");
         });
+        
+        photoResistor3.on("data", function() {
+          lightReading3 = this.scaleTo(0, 255);
+          var lightLevel = currentLight;
+          //  console.log("Photoresistor3: " + lightReading3);
+          var lightOutput0 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
+          var lightOutput1 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
+          var lightOutput2 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
+          var lightOutput3 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
+          
+          if (lightOutput0 > 0 && lightOutput0 <= 255) {
+                        board.analogWrite(3, lightOutput0);
+                    } else if (lightOutput0 > 255) {
+                        board.analogWrite(3,255);
+                    } else {
+                        board.analogWrite(3, 0);
+                    }
+                    if (lightOutput1 > 0 && lightOutput1 <= 255) {
+                        board.analogWrite(5, lightOutput1);
+                    } else if (lightOutput0 > 255) {
+                        board.analogWrite(5,255);
+                    } else {
+                        board.analogWrite(5, 0);
+                    }
+                    if (lightOutput2 > 0 && lightOutput2 <= 255) {
+                        board.analogWrite(6, lightOutput2);
+                    } else if (lightOutput0 > 255) {
+                        board.analogWrite(6,255);
+                    } else {
+                        board.analogWrite(6, 0);
+                    }
+                    if (lightOutput3 > 0 && lightOutput3 <= 255) {
+                        board.analogWrite(11, lightOutput3);
+                    } else if (lightOutput0 > 255) {
+                        board.analogWrite(11,255);
+                    } else {
+                        board.analogWrite(11, 0);
+                    }
+        });
   
     /*Board loop implementation*/
     board.loop(1000, () => {
@@ -124,7 +163,7 @@ var port = 3000;
         });
         photoResistor3.on("data", function() {
           lightReading3 = this.scaleTo(0, 255);
-          var lightLevel = currentLight;
+          /*var lightLevel = currentLight;
           //  console.log("Photoresistor3: " + lightReading3);
           var lightOutput0 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
           var lightOutput1 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
@@ -165,7 +204,7 @@ var port = 3000;
                     } else {
                         heatingPad.low();
                     }
-        });
+        });*/
         
         
         if(tempReading < 30){
