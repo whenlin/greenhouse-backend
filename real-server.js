@@ -866,17 +866,17 @@ var port = 3000;
             plant.plantName = "Delilah";
             plant.plantType = "cactus";
             plant.minTemperature = "N/A";
-            plant.currentTemperature = "21";
+            plant.currentTemperature = "23";
             plant.maxTemperature = "N/A";
             plant.minMoisture = "N/A";
             plant.currentMoisture = "N/A";
             plant.maxMoisture = "N/A";
             plant.minLight = "N/A";
-            plant.currentLight = "0";
+            plant.currentLight = "1";
             plant.maxLight = "N/A";
             
-            currentTemperature = 21;
-            currentLight = 0;
+            currentTemperature = 23;
+            currentLight = 1;
         }
         
         res.json(plant);
