@@ -13,8 +13,6 @@ var User = require('./app/models/User');
 var Plant = require('./app/models/Plant');
 var plant = require('./app/models/Plant');
 var port = 3000;
-var currentLight;
-var currentTemperature;
 
 // DATABASE SETUP
     var mongoose   = require('mongoose');
@@ -47,7 +45,14 @@ var currentTemperature;
   // Create a standard `led` component instance
   var led = new five.Led(13);
   
-  board.pinMode(11, five.Pin.PWM);
+  var currentLight;
+  var currentTemperature;
+  
+  board.pinMode(3, five.Pin.PWM);
+  board.pinMode(5, five.Pin.PWM);
+  board.pinMode(6, five.Pin.PWM);
+  board.pinMode(10, five.Pin.PWM);
+  
   
   //board.pinMode(12, five.Pin.OUTPUT);
   
@@ -62,8 +67,6 @@ var currentTemperature;
   });
   
   const heatingPad = new five.Pin(9);
-  
-  
   
   
   temperatureSensor.on('change', (value) => {
@@ -121,7 +124,7 @@ var currentTemperature;
         });
   
     /*Board loop implementation*/
-    board.loop(1000, () => {
+    /*board.loop(1000, () => {
         var lightReading0;
         var lightReading1;
         var lightReading2;
@@ -143,14 +146,14 @@ var currentTemperature;
         });
         
         
-        /*if(tempReading < 30){
+        if(tempReading < 30){
             heatingPad.high();
         } else {
             heatingPad.low();
-        }*/
+        }
         
         /*plant.find({}).toArray(function(plantArray) {
-                for(var p in plantArray) {*/
+                for(var p in plantArray) {
                     var lightLevel = currentLight;
                     var tempLevel = currentTemperature;
                     
@@ -194,12 +197,11 @@ var currentTemperature;
                         heatingPad.low();
                     }
                 //}
-            //});
+            //});*/
             
         });
 
 
-    
     app.post('/createUser', function(req, response, next){
         
         var uname = req.body.username;
@@ -299,11 +301,11 @@ var currentTemperature;
     
     .post('/addPlant', function(req, res, next){
         
-        var plantName = req.body.plantName;
-        var plantType = req.body.plantType;
-        
-        var newPlant = new Plant();                  //the light setting that the user set from their mobile app
+            var plantName = req.body.plantName;
+            var plantType = req.body.plantType;
             
+            var newPlant = new Plant();                  //the light setting that the user set from their mobile app
+                
             newPlant.plantName = plantName;
             newPlant.plantType = plantType;
             newPlant.minTemperature = "N/A";
@@ -335,38 +337,50 @@ var currentTemperature;
         
         currentLight = req.body.currentLight;
         
-        switch (req.body.currentLight) {
+        switch (currentLight) {
                     
                     case '1':
                         // code
                         board.analogWrite(3, 51);
                         board.analogWrite(5, 51);
                         board.analogWrite(6, 51);
-                        board.analogWrite(11, 51);
+                        board.analogWrite(10, 51);
                         res.send("Light has been set to 51!");
                         break;
                     
                     case '2':
                         // code
+                        board.analogWrite(3, 102);
                         board.analogWrite(5, 102);
+                        board.analogWrite(6, 102);
+                        board.analogWrite(10, 102);
                         res.send("Light has been set!");
                         break;
                     
                     case '3':
                         // code
+                        board.analogWrite(3, 153);
+                        board.analogWrite(5, 153);
                         board.analogWrite(6, 153);
+                        board.analogWrite(10, 153);
                         res.send("Light has been set!");
                         break;
                     
                     case '4':
                         // code
-                        board.analogWrite(1, 204);
+                        board.analogWrite(3, 204);
+                        board.analogWrite(5, 204);
+                        board.analogWrite(6, 204);
+                        board.analogWrite(10, 204);
                         res.json("Light has been set!");
                         break;
                     
                     case '5':
                         // code
-                        board.analogWrite(1, 255);
+                        board.analogWrite(3, 255);
+                        board.analogWrite(5, 255);
+                        board.analogWrite(6, 255);
+                        board.analogWrite(10, 255);
                         res.json("Light has been set!");
                         break;
                     
@@ -374,7 +388,10 @@ var currentTemperature;
                     
                     case '0':
                         // code
-                    board.analogWrite(1, 0);
+                        board.analogWrite(3, 0);
+                        board.analogWrite(5, 0);
+                        board.analogWrite(6, 0);
+                        board.analogWrite(10, 0);
                     res.json("Light has been set!");
                     
                     
