@@ -169,7 +169,7 @@ var port = 3000;
                         board.analogWrite(11, 0);
                     }
                     
-                    if(tempReading < tempLevel*0.1) {
+                    if(tempReading < 30) {
                         heatingPad.high();
                     } else {
                         heatingPad.low();
