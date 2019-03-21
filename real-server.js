@@ -53,6 +53,8 @@ var port = 3000;
   board.pinMode(6, five.Pin.PWM);
   board.pinMode(10, five.Pin.PWM);
   
+  const heatingPad = new five.Pin(9);
+  
   
   //board.pinMode(12, five.Pin.OUTPUT);
   
@@ -62,32 +64,9 @@ var port = 3000;
   var photoResistor3 = new five.Sensor("A3");
   
   const temperatureSensor = new five.Sensor({
-    pin: 'A1',
+    pin: 'A4',
     threshold: 4
   });
-  
-  const heatingPad = new five.Pin(9);
-  
-  
-  temperatureSensor.on('change', (value) => {
-    
-    let Vo = value;
-    const R1 = 10000;
-    let logR2, R2, T;
-    const c1 = 1.009249522e-03;
-    const c2 = 2.378405444e-04;
-    const c3 = 2.019202697e-07;
-    R2 = R1 * (1023.0 / Vo - 1.0);
-    logR2 = Math.log(R2);
-    T = (1.0 / (c1 + c2 * logR2 + c3 * logR2 * logR2 * logR2));
-    T = T - 273.15;
-    T = (T * 9.0) / 5.0 + 32.0;
-    T = (T - 32) * (5 / 9);
-    
-    console.log("Temperature: " + T.toFixed(2));
-    
-  });
-  
   
   photoResistor1.on('change', function() {
       var lightReading = this.value; //this.scaleTo(0,255);
@@ -112,7 +91,7 @@ var port = 3000;
             T = (T - 32) * (5 / 9);
             
             tempReading = T.toFixed(2);
-            
+            console.log("Temperature: " + tempReading);
         });
         
         heatingPad.on("high", function(){
@@ -146,7 +125,7 @@ var port = 3000;
         });
         
         
-        if(tempReading < 30){
+        if(tempReading < 10){
             heatingPad.high();
         } else {
             heatingPad.low();
@@ -157,10 +136,10 @@ var port = 3000;
                     var lightLevel = currentLight;
                     var tempLevel = currentTemperature;
                     
-                    var lightOutput0 = (parseInt(lightLevel) * 51)/4 - lightReading0;
-                    var lightOutput1 = (parseInt(lightLevel) * 51)/4 - lightReading1;
-                    var lightOutput2 = (parseInt(lightLevel) * 51)/4 - lightReading2;
-                    var lightOutput3 = (parseInt(lightLevel) * 51)/4 - lightReading3;
+                    var lightOutput0 = (parseInt(lightLevel) * 51) - lightReading0/4;
+                    var lightOutput1 = (parseInt(lightLevel) * 51) - lightReading1/4;
+                    var lightOutput2 = (parseInt(lightLevel) * 51) - lightReading2/4;
+                    var lightOutput3 = (parseInt(lightLevel) * 51) - lightReading3/4;
                     
                     if (lightOutput0 > 0 && lightOutput0 < 255) {
                         board.analogWrite(3, lightOutput0);
