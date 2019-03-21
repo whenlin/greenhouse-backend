@@ -102,7 +102,7 @@ var port = 3000;
         });
         
         photoResistor3.on("data", function() {
-          lightReading3 = this.scaleTo(0, 255);
+          var lightReading3 = this.scaleTo(0, 255);
           var lightLevel = currentLight;
           //  console.log("Photoresistor3: " + lightReading3);
           var lightOutput0 = (lightReading3 / 4) - (parseInt(lightLevel) * 51);
@@ -141,7 +141,7 @@ var port = 3000;
         });
   
     /*Board loop implementation*/
-    board.loop(1000, () => {
+    /*board.loop(1000, () => {
         var lightReading0;
         var lightReading1;
         var lightReading2;
@@ -204,7 +204,7 @@ var port = 3000;
                     } else {
                         heatingPad.low();
                     }
-        });*/
+        });
         
         
         if(tempReading < 30){
@@ -265,9 +265,9 @@ var port = 3000;
                         heatingPad.low();
                     }
                 //}
-            //});*/
+            //});
             
-        });
+        });*/
 
 
     app.post('/createUser', function(req, response, next){
