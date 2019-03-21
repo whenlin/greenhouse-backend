@@ -673,6 +673,65 @@ var port = 3000;
         currentLight = req.body.currentLight;
         currentTemperature = req.body.currentTemperature;
         
+        switch (currentLight) {
+                    
+                    case '1':
+                        // code
+                        board.analogWrite(3, 51);
+                        board.analogWrite(5, 51);
+                        board.analogWrite(6, 51);
+                        board.analogWrite(10, 51);
+                        res.send("Light has been set to 51!");
+                        break;
+                    
+                    case '2':
+                        // code
+                        board.analogWrite(3, 102);
+                        board.analogWrite(5, 102);
+                        board.analogWrite(6, 102);
+                        board.analogWrite(10, 102);
+                        res.send("Light has been set!");
+                        break;
+                    
+                    case '3':
+                        // code
+                        board.analogWrite(3, 153);
+                        board.analogWrite(5, 153);
+                        board.analogWrite(6, 153);
+                        board.analogWrite(10, 153);
+                        res.send("Light has been set!");
+                        break;
+                    
+                    case '4':
+                        // code
+                        board.analogWrite(3, 204);
+                        board.analogWrite(5, 204);
+                        board.analogWrite(6, 204);
+                        board.analogWrite(10, 204);
+                        res.json("Light has been set!");
+                        break;
+                    
+                    case '5':
+                        // code
+                        board.analogWrite(3, 255);
+                        board.analogWrite(5, 255);
+                        board.analogWrite(6, 255);
+                        board.analogWrite(10, 255);
+                        res.json("Light has been set!");
+                        break;
+                    
+                    default:
+                    
+                    case '0':
+                        // code
+                        board.analogWrite(3, 0);
+                        board.analogWrite(5, 0);
+                        board.analogWrite(6, 0);
+                        board.analogWrite(10, 0);
+                    res.json("Light has been set!");
+        }
+        
+        res.json({light: currentLight});
     })
     
     
@@ -787,6 +846,40 @@ var port = 3000;
                 res.json(plant[0]);
             }
         });*/
+        
+        var plant = new Plant();
+        
+        if(currentLight && currentTemperature){
+            
+            plant.plantName = "Delilah";
+            plant.plantType = "cactus";
+            plant.minTemperature = "N/A";
+            plant.currentTemperature = currentTemperature;
+            plant.maxTemperature = "N/A";
+            plant.minMoisture = "N/A";
+            plant.currentMoisture = "N/A";
+            plant.maxMoisture = "N/A";
+            plant.minLight = "N/A";
+            plant.currentLight = currentLight;
+            plant.maxLight = "N/A";
+        } else {
+            plant.plantName = "Delilah";
+            plant.plantType = "cactus";
+            plant.minTemperature = "N/A";
+            plant.currentTemperature = "21";
+            plant.maxTemperature = "N/A";
+            plant.minMoisture = "N/A";
+            plant.currentMoisture = "N/A";
+            plant.maxMoisture = "N/A";
+            plant.minLight = "N/A";
+            plant.currentLight = "0";
+            plant.maxLight = "N/A";
+            
+            currentTemperature = 21;
+            currentLight = 0;
+        }
+        
+        res.json(plant);
         
     })
     
