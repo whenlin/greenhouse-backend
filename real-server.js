@@ -77,7 +77,7 @@ var port = 3000;
   temperatureSensor.on('change', (value) => {
     
             let Vo = value;
-            const R1 = 100000;
+            const R1 = 10000;
             let logR2, R2, T;
             const c1 = 1.009249522e-03;
             const c2 = 2.378405444e-04;
@@ -102,7 +102,7 @@ var port = 3000;
         });
   
     /*Board loop implementation*/
-    /*board.loop(1000, () => {
+    board.loop(1000, () => {
         var lightReading0;
         var lightReading1;
         var lightReading2;
@@ -131,7 +131,7 @@ var port = 3000;
         }
         
         /*plant.find({}).toArray(function(plantArray) {
-                for(var p in plantArray) {
+                for(var p in plantArray) {*/
                     var lightLevel = currentLight;
                     var tempLevel = currentTemperature;
                     
@@ -177,7 +177,7 @@ var port = 3000;
                 //}
             //});
             
-        });*/
+        });
 
 
     app.post('/createUser', function(req, response, next){
