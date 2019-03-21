@@ -101,15 +101,15 @@ var port = 3000;
             console.log("Heating pad set to low!!!!!");
         });
         
-        photoResistor3.on("data", function() {
-          var lightReading3 = this.scaleTo(0, 255);
+        photoResistor1.on("data", function() {
+          var lightReading1 = this.scaleTo(0, 255);
           var lightLevel = currentLight;
-          console.log("LightReading3 "+lightReading3)
+          console.log("LightReading3 "+lightReading1)
           //  console.log("Photoresistor3: " + lightReading3);
-          var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading3 / 4);
-          var lightOutput1 = (parseInt(lightLevel) * 51) - (lightReading3 / 4);
-          var lightOutput2 = (parseInt(lightLevel) * 51) - (lightReading3 / 4);
-          var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading3 / 4);
+          var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
+          var lightOutput1 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
+          var lightOutput2 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
+          var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
           
           console.log("lightOutput0: "+lightOutput0)
           console.log("lightOutput1: "+lightOutput1)
