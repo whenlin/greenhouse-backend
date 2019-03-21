@@ -91,6 +91,12 @@ var port = 3000;
             
             tempReading = T.toFixed(2);
             console.log("Temperature: " + tempReading);
+            
+            if(tempReading < 30)
+                heatingPad.high();
+            else{
+                heatingPad.low();
+            }
         });
         
         heatingPad.on("high", function(){
@@ -101,10 +107,14 @@ var port = 3000;
             console.log("Heating pad set to low!!!!!");
         });
         
+        temperatureSensor.on("change", function(){
+            
+        });
+        
         photoResistor1.on("data", function() {
           var lightReading1 = this.scaleTo(0, 255);
           var lightLevel = currentLight;
-          console.log("LightReading3 "+lightReading1)
+         // console.log("LightReading3 "+lightReading1)
           //  console.log("Photoresistor3: " + lightReading3);
           var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
           var lightOutput1 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
