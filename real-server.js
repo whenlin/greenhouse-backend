@@ -13,6 +13,8 @@ var User = require('./app/models/User');
 var Plant = require('./app/models/Plant');
 var plant = require('./app/models/Plant');
 var port = 3000;
+var currentLight;
+var currentTemperature;
 
 // DATABASE SETUP
     var mongoose   = require('mongoose');
@@ -141,45 +143,45 @@ var port = 3000;
         });
         
         
-        if(tempReading < 30){
+        /*if(tempReading < 30){
             heatingPad.high();
         } else {
             heatingPad.low();
-        }
+        }*/
         
         /*plant.find({}).toArray(function(plantArray) {
-                for(var p in plantArray) {
-                    var lightLevel = p.currentLight;
-                    var tempLevel = p.currentTemperature;
+                for(var p in plantArray) {*/
+                    var lightLevel = currentLight;
+                    var tempLevel = currentTemperature;
                     
                     var lightOutput0 = (parseInt(lightLevel) * 51)/4 - lightReading0;
                     var lightOutput1 = (parseInt(lightLevel) * 51)/4 - lightReading1;
                     var lightOutput2 = (parseInt(lightLevel) * 51)/4 - lightReading2;
                     var lightOutput3 = (parseInt(lightLevel) * 51)/4 - lightReading3;
                     
-                    if (lightOutput0 > 0 && < 255) {
-                        board.analogWrite(11, lightOutput);
+                    if (lightOutput0 > 0 && lightOutput0 < 255) {
+                        board.analogWrite(3, lightOutput0);
                     } else if (lightOutput0 > 0) {
-                        board.analogWrite(11,255);
+                        board.analogWrite(3,255);
                     } else {
-                        board.analogWrite(11, 0);
+                        board.analogWrite(3, 0);
                     }
-                    if (lightOutput1 > 0 && < 255) {
-                        board.analogWrite(11, lightOutput);
+                    if (lightOutput1 > 0 && lightOutput1 < 255) {
+                        board.analogWrite(5, lightOutput1);
                     } else if (lightOutput0 > 0) {
-                        board.analogWrite(11,255);
+                        board.analogWrite(5,255);
                     } else {
-                        board.analogWrite(11, 0);
+                        board.analogWrite(5, 0);
                     }
-                    if (lightOutput2 > 0 && < 255) {
-                        board.analogWrite(11, lightOutput);
+                    if (lightOutput2 > 0 && lightOutput2 < 255) {
+                        board.analogWrite(6, lightOutput2);
                     } else if (lightOutput0 > 0) {
-                        board.analogWrite(11,255);
+                        board.analogWrite(6,255);
                     } else {
-                        board.analogWrite(11, 0);
+                        board.analogWrite(6, 0);
                     }
-                    if (lightOutput3 > 0 && < 255) {
-                        board.analogWrite(11, lightOutput);
+                    if (lightOutput3 > 0 && lightOutput3 < 255) {
+                        board.analogWrite(11, lightOutput3);
                     } else if (lightOutput0 > 0) {
                         board.analogWrite(11,255);
                     } else {
@@ -187,12 +189,12 @@ var port = 3000;
                     }
                     
                     if(tempReading < tempLevel*0.1) {
-                        board.analogWrite(12, 1);
+                        heatingPad.high();
                     } else {
-                        board.analogWrite(12, 0)
+                        heatingPad.Low();
                     }
-                }
-            });*/
+                //}
+            //});
             
         });
 
@@ -331,7 +333,9 @@ var port = 3000;
         
         console.log("Set light route has been reached!");
         
-        switch (req.body.currentLight) {
+        currentLight = req.body.currentLight;
+        
+        /*switch (req.body.currentLight) {
                     
                     case '1':
                         // code
@@ -371,7 +375,7 @@ var port = 3000;
                     res.json("Light has been set!");
                     
                     
-                }
+                }*/
         
         // plant.findById(req.params._id, function(err, Plant) {
         //     if (err) {
@@ -438,7 +442,7 @@ var port = 3000;
     })
     
     .post('/setMoisture/:_id', function(req, res, next){
-        plant.findById(req.params._id, function(err, Plant) {
+        /*plant.findById(req.params._id, function(err, Plant) {
             if (err) {
                 res.send(err);
             } else {
@@ -487,11 +491,13 @@ var port = 3000;
                         //board.analogWrite(12, 0)
                 }
             }
-        });
+        });*/
     })
     
     .post('/setTemperature/:_id', function(req, res, next){
-        plant.findById(req.params._id, function(err, Plant) {
+        
+        
+        /*plant.findById(req.params._id, function(err, Plant) {
             if (err) {
                 res.send(err);
             } else {
@@ -509,9 +515,8 @@ var port = 3000;
                 plantBeforeUpdate.currentLight = Plant.currentLight;
                 //plantBeforeUpdate.maxLight = Plant.maxLight;
                 
-                /*multiSensor.on("data", function(){
+                multiSensor.on("data", function(){
                     temperatureReading = this.thermometer.celsius;
-                */
                 switch (plantBeforeUpdate.currentMoisture) {
                     case '1':
                         // code
@@ -542,11 +547,11 @@ var port = 3000;
                         // code
                 }
             }
-        });
+        });*/
     })
     
     .post('/updatePlantInfo/:_id', function(req, res, next){
-        plant.findById(req.params._id, function(err, Plant) {
+        /*plant.findById(req.params._id, function(err, Plant) {
             if (err) {
                 res.send(err);
             } else {
@@ -565,13 +570,16 @@ var port = 3000;
                 //plantBeforeUpdate.maxLight = Plant.maxLight;
                 
             }
-        });
+        });*/
+        
+        currentLight = req.body.currentLight;
+        currentTemperature = req.body.currentTemperature;
         
     })
     
     
     .get('/getLight/', function(req, res, next){
-        var lightReading;
+        /*var lightReading;
         
         
         // "data" get the current reading from the photoresistor
@@ -606,11 +614,11 @@ var port = 3000;
         //         res.json({currentLight: plant})
                 
         //     }
-        // });
+        // });*/
     })
     
     .get('/moistureInfo/:_id', function(req, res, next){
-        plant.findById(req.params._id, function(err, Plant) {
+        /*plant.findById(req.params._id, function(err, Plant) {
             if (err) {
                 res.send(err);
             } else {
@@ -634,13 +642,12 @@ var port = 3000;
                 setTimeout(function(){
                     res.json({moisture: moistureReading});  
                 }, 3000);
-                */
             }
-        });
+        });*/
     })
     
     .get('/temperatureInfo/:_id', function(req, res, next){
-        plant.findById(req.params._id, function(err, Plant) {
+        /*plant.findById(req.params._id, function(err, Plant) {
             if (err) {
                 res.send(err);
             } else {
@@ -664,16 +671,16 @@ var port = 3000;
                 setTimeout(function(){
                     res.json({temperature: temperatureReading});  
                 }, 3000);
-                */
+                
             }
-        });
+        });*/
     })
     
     .get('/retrievePlantInfo/:_id', function(req, res, next){
         
         console.log("Plant " + req.params._id + " info is being requested");
         
-        Plant.find({ _id: req.params._id }, function(err, plant){
+        /*Plant.find({ _id: req.params._id }, function(err, plant){
             if(err){
                 console.log(err);
                 throw err;
@@ -681,7 +688,7 @@ var port = 3000;
                 console.log(plant);
                 res.json(plant[0]);
             }
-        });
+        });*/
         
     })
     
@@ -689,7 +696,7 @@ var port = 3000;
         
         console.log("The list of plants is being requested...");
     
-        Plant.find(function(err, Plants){
+        /*Plant.find(function(err, Plants){
             if(err){
                console.log(err);
                throw err;
@@ -706,7 +713,7 @@ var port = 3000;
             res.json({plants: array});
                 
             }
-        });
+        });*/
     });
    
     
