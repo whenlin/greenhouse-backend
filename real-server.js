@@ -191,7 +191,7 @@ var currentTemperature;
                     if(tempReading < tempLevel*0.1) {
                         heatingPad.high();
                     } else {
-                        heatingPad.Low();
+                        heatingPad.low();
                     }
                 //}
             //});
