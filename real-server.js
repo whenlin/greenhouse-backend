@@ -77,7 +77,7 @@ var port = 3000;
   temperatureSensor.on('change', (value) => {
     
             let Vo = value;
-            const R1 = 10000;
+            const R1 = 100000;
             let logR2, R2, T;
             const c1 = 1.009249522e-03;
             const c2 = 2.378405444e-04;
