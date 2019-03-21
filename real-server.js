@@ -331,7 +331,7 @@ var port = 3000;
         
         console.log("Set light route has been reached!");
         
-        switch (req.body.currentLight) {
+        /*switch (req.body.currentLight) {
                     
                     case '1':
                         // code
@@ -371,7 +371,7 @@ var port = 3000;
                     res.json("Light has been set!");
                     
                     
-                }
+                }*/
         
         // plant.findById(req.params._id, function(err, Plant) {
         //     if (err) {
@@ -438,7 +438,7 @@ var port = 3000;
     })
     
     .post('/setMoisture/:_id', function(req, res, next){
-        plant.findById(req.params._id, function(err, Plant) {
+        /*plant.findById(req.params._id, function(err, Plant) {
             if (err) {
                 res.send(err);
             } else {
@@ -509,9 +509,6 @@ var port = 3000;
                 plantBeforeUpdate.currentLight = Plant.currentLight;
                 //plantBeforeUpdate.maxLight = Plant.maxLight;
                 
-                /*multiSensor.on("data", function(){
-                    temperatureReading = this.thermometer.celsius;
-                */
                 switch (plantBeforeUpdate.currentMoisture) {
                     case '1':
                         // code
@@ -541,7 +538,7 @@ var port = 3000;
                     default:
                         // code
                 }
-            }
+            }*/
         });
     })
     
