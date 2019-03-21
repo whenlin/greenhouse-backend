@@ -335,23 +335,26 @@ var currentTemperature;
         
         currentLight = req.body.currentLight;
         
-        /*switch (req.body.currentLight) {
+        switch (req.body.currentLight) {
                     
                     case '1':
                         // code
-                        board.analogWrite(1, 51);
+                        board.analogWrite(3, 51);
+                        board.analogWrite(5, 51);
+                        board.analogWrite(6, 51);
+                        board.analogWrite(11, 51);
                         res.send("Light has been set to 51!");
                         break;
                     
                     case '2':
                         // code
-                        board.analogWrite(1, 102);
+                        board.analogWrite(5, 102);
                         res.send("Light has been set!");
                         break;
                     
                     case '3':
                         // code
-                        board.analogWrite(1, 153);
+                        board.analogWrite(6, 153);
                         res.send("Light has been set!");
                         break;
                     
@@ -375,7 +378,7 @@ var currentTemperature;
                     res.json("Light has been set!");
                     
                     
-                }*/
+                }
         
         // plant.findById(req.params._id, function(err, Plant) {
         //     if (err) {
@@ -439,6 +442,7 @@ var currentTemperature;
                 
         //     }
         // });
+        res.json({currentLight: 'currentLight Has been set'});
     })
     
     .post('/setMoisture/:_id', function(req, res, next){
