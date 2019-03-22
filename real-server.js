@@ -99,7 +99,7 @@ var port = 3000;
             
             tempReading = T.toFixed(2);
            // console.log("Temperature: " + tempReading);
-            currentTemperature = tempReading + 19;
+            currentTemperature = Math.abs(tempReading) + 19;
             console.log("Current temperature: "+ currentTemperature + "degrees Celsius");
             
             if(currentTemperature < 30)
