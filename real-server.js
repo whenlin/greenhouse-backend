@@ -193,7 +193,9 @@ var port = 3000;
                 //         }
                         
                 // console.log("Photoresistor3: " + lightOutput3);
-                console.log("Photoresistor3: " + photoOutput3);
+                
+                
+          //      console.log("Photoresistor3: " + photoOutput3);
             
         });
         
