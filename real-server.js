@@ -105,7 +105,7 @@ var port = 3000;
         });
         
         heatingPad.on("high", function(){
-            console.log("Heating pad set to high!!!!!");
+           // console.log("Heating pad set to high!!!!!");
         });
         
         heatingPad.on("low", function(){
