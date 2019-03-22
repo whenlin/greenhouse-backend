@@ -171,7 +171,7 @@ var port = 3000;
                 var lightLevel = currentLight;
                 var desiredLight = parseInt(lightLevel) * 51;
                 var min = 10;
-                var max = 200;
+                var max = 260;
                 console.log("Light Reading1: "+lightReading1);
                 console.log("Desired Light: "+desiredLight);
                 
