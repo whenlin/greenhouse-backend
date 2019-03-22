@@ -163,11 +163,12 @@ var port = 3000;
         });
         
        
-        photoResistor3.on("data", function(){
+        photoResistor3.on("change", function(){
                 var lightReading1 = this.scaleTo(0, 255);
                 var lightLevel = currentLight;
                 var desiredLight = parseInt(lightLevel) * 51;
-                if(photoOutput3 == 0)
+                
+            if(photoOutput3 == 0)
                     photoOutput3 = lightReading1;
                 
             if(lightReading1 < desiredLight){
