@@ -95,7 +95,7 @@ var port = 3000;
             T = (T - 32) * (5 / 9);
             
             tempReading = T.toFixed(2);
-            console.log("Temperature: " + tempReading);
+           // console.log("Temperature: " + tempReading);
             
             if(tempReading < 30)
                 heatingPad.high();
@@ -164,7 +164,7 @@ var port = 3000;
         
        
         photoResistor3.on("change", function(){
-                var lightReading1 = this.scaleTo(0, 255);
+                var lightReading1 = (this.value / 4);
                 var lightLevel = currentLight;
                 var desiredLight = parseInt(lightLevel) * 51;
                 
