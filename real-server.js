@@ -99,8 +99,10 @@ var port = 3000;
             
             tempReading = T.toFixed(2);
            // console.log("Temperature: " + tempReading);
+            currentTemperature = tempReading + 19;
+            console.log("Current temperature: "+ currentTemperature + "degrees Celsius");
             
-            if(tempReading < 30)
+            if(currentTemperature < 30)
                 heatingPad.high();
             else{
                 heatingPad.low();
@@ -108,11 +110,11 @@ var port = 3000;
         });
         
         heatingPad.on("high", function(){
-           // console.log("Heating pad set to high!!!!!");
+            console.log("Heating pad is currently on!");
         });
         
         heatingPad.on("low", function(){
-            console.log("Heating pad set to low!!!!!");
+            console.log("Heating pad is currently off");
         });
         
         temperatureSensor.on("change", function(){
@@ -120,24 +122,41 @@ var port = 3000;
         });
         
         photoResistor0.on("data", function(){
-            var lightReading1 = this.scaleTo(0, 255);
-            var lightLevel = currentLight;
-            var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
-             
-            if (lightOutput0 > 0 && lightOutput0 <= 255) {
-                        board.analogWrite(3, lightOutput0);
-                    } else if (lightOutput0 > 255) {
-                        board.analogWrite(3,255);
-                    } else {
-                        board.analogWrite(3, 0);
-                    }
+            var lightReading1 = (this.value);
+                var lightLevel = currentLight;
+                var desiredLight = parseInt(lightLevel) * 51;
+                var min = 10;
+                var max = 260;
+                
+                
+            if(photoOutput3 == 0)
+                photoOutput3 = lightReading1;
+            
+            
+            if(lightReading1 < desiredLight){
+                photoOutput3 = photoOutput3 + 1;
+                
+                if(photoOutput3 >= max) photoOutput3 = max;
+                
+                board.analogWrite(3, photoOutput3);
+                
+            } else if (lightReading1 > desiredLight){
+                photoOutput3 = photoOutput3 - 1;
+                
+                if(photoOutput3 <= min) photoOutput3 = min;
+                
+                board.analogWrite(3, photoOutput3);
+            } else if (lightReading1 == desiredLight){
+                board.analogWrite(3, photoOutput3);
+            }
+            
                     
          //   console.log("Photoresistor0: " + lightOutput0);
         });
         
         photoResistor1.on("data", function() {
-          var lightReading1 = this.scaleTo(0, 255);
-          var lightLevel = currentLight;
+        //  var lightReading1 = this.scaleTo(0, 255);
+          
          // console.log("LightReading3 "+lightReading1)
           //  console.log("Photoresistor3: " + lightReading3);
         //  var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
@@ -145,20 +164,34 @@ var port = 3000;
           var lightOutput2 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
           var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
           
-        //   console.log("lightOutput0: "+lightOutput0)
-        //   console.log("lightOutput1: "+lightOutput1)
-        //   console.log("lightOutput2: "+lightOutput2)
-        //   console.log("lightOutput3: "+lightOutput3)
-          
-                    
-                    
-                    if (lightOutput1 > 0 && lightOutput1 <= 255) {
-                        board.analogWrite(5, lightOutput1);
-                    } else if (lightOutput1 > 255) {
-                        board.analogWrite(5,255);
-                    } else {
-                        board.analogWrite(5, 0);
-                    }
+       var lightReading1 = (this.value);
+                var lightLevel = currentLight;
+                var desiredLight = parseInt(lightLevel) * 51;
+                var min = 10;
+                var max = 260;
+                
+                
+            if(photoOutput3 == 0)
+                photoOutput3 = lightReading1;
+            
+            
+            if(lightReading1 < desiredLight){
+                photoOutput3 = photoOutput3 + 1;
+                
+                if(photoOutput3 >= max) photoOutput3 = max;
+                
+                board.analogWrite(5, photoOutput3);
+                
+            } else if (lightReading1 > desiredLight){
+                photoOutput3 = photoOutput3 - 1;
+                
+                if(photoOutput3 <= min) photoOutput3 = min;
+                
+                board.analogWrite(5, photoOutput3);
+            } else if (lightReading1 == desiredLight){
+                board.analogWrite(5, photoOutput3);
+            }
+            
                     
              //    console.log("Photoresistor1: " + lightOutput1);  
                     
@@ -172,8 +205,7 @@ var port = 3000;
                 var desiredLight = parseInt(lightLevel) * 51;
                 var min = 10;
                 var max = 260;
-                console.log("Light Reading1: "+lightReading1);
-                console.log("Desired Light: "+desiredLight);
+                
                 
             if(photoOutput3 == 0)
                 photoOutput3 = lightReading1;
@@ -195,37 +227,41 @@ var port = 3000;
             } else if (lightReading1 == desiredLight){
                 board.analogWrite(10, photoOutput3);
             }
-            
-                // var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
-                
-                
-                //  if (lightOutput3 > 0 && lightOutput3 <= 255) {
-                //             board.analogWrite(10, lightOutput3);
-                //         } else if (lightOutput3 > 255) {
-                //             board.analogWrite(10,255);
-                //         } else {
-                //             board.analogWrite(10, 0);
-                //         }
-                        
-                // console.log("Photoresistor3: " + lightOutput3);
-                
+        
                 
           //      console.log("Photoresistor3: " + photoOutput3);
             
         });
         
         photoResistor2.on("data", function(){
-            var lightReading1 = this.scaleTo(0, 255);
-            var lightLevel = currentLight;
-            var lightOutput2 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
+           var lightReading1 = (this.value);
+                var lightLevel = currentLight;
+                var desiredLight = parseInt(lightLevel) * 51;
+                var min = 10;
+                var max = 260;
+                
+                
+            if(photoOutput3 == 0)
+                photoOutput3 = lightReading1;
             
-            if (lightOutput2 > 0 && lightOutput2 <= 255) {
-                        board.analogWrite(6, lightOutput2);
-                    } else if (lightOutput2 > 255) {
-                        board.analogWrite(6,255);
-                    } else {
-                        board.analogWrite(6, 0);
-                    } 
+            
+            if(lightReading1 < desiredLight){
+                photoOutput3 = photoOutput3 + 1;
+                
+                if(photoOutput3 >= max) photoOutput3 = max;
+                
+                board.analogWrite(6, photoOutput3);
+                
+            } else if (lightReading1 > desiredLight){
+                photoOutput3 = photoOutput3 - 1;
+                
+                if(photoOutput3 <= min) photoOutput3 = min;
+                
+                board.analogWrite(6, photoOutput3);
+            } else if (lightReading1 == desiredLight){
+                board.analogWrite(6, photoOutput3);
+            }
+            
                     
           //  console.log("Photoresistor2: " + lightOutput2);
         });
@@ -473,7 +509,7 @@ var port = 3000;
             newPlant.currentMoisture = "N/A";
             newPlant.maxMoisture = "N/A";
             newPlant.minLight = "N/A";
-            newPlant.currentLight = "N/A";
+            newPlant.currentLight = req.body.currentLight;
             newPlant.maxLight = "N/A";
             
                         
