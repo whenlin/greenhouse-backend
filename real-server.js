@@ -1,6 +1,11 @@
 const five = require('johnny-five');
 const board = new five.Board({repl: false});     //defining the arduino board
 
+var photoOutput0 = 0;
+ var photoOutput1 = 0;
+ var photoOutput2 = 0;
+ var photoOutput3 = 0;
+
  board.on("ready", function() {
      
 var express = require('express');
@@ -157,7 +162,7 @@ var port = 3000;
                    
         });
         
-        var photoOutput3 = 0;
+       
         photoResistor3.on("data", function(){
                 var lightReading1 = this.scaleTo(0, 255);
                 var lightLevel = currentLight;
