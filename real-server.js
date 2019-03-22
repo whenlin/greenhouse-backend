@@ -167,19 +167,27 @@ var port = 3000;
                 var lightReading1 = (this.value);
                 var lightLevel = currentLight;
                 var desiredLight = parseInt(lightLevel) * 51;
-                
+                var min = 10;
+                var max = 200;
                 console.log("Light Reading1: "+lightReading1);
                 console.log("Desired Light: "+desiredLight);
                 
             if(photoOutput3 == 0)
                 photoOutput3 = lightReading1;
-                
+            
+            
             if(lightReading1 < desiredLight){
                 photoOutput3 = photoOutput3 + 1;
+                
+                if(photoOutput3 >= max) photoOutput3 = max;
+                
                 board.analogWrite(10, photoOutput3);
                 
             } else if (lightReading1 > desiredLight){
                 photoOutput3 = photoOutput3 - 1;
+                
+                if(photoOutput3 <= min) photoOutput3 = min;
+                
                 board.analogWrite(10, photoOutput3);
             } else if (lightReading1 == desiredLight){
                 board.analogWrite(10, photoOutput3);
