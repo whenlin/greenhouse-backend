@@ -95,7 +95,7 @@ var port = 3000;
             T = (T - 32) * (5 / 9);
             
             tempReading = T.toFixed(2);
-       //     console.log("Temperature: " + tempReading);
+            console.log("Temperature: " + tempReading);
             
             if(tempReading < 30)
                 heatingPad.high();
