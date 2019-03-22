@@ -95,7 +95,7 @@ var port = 3000;
             T = (T - 32) * (5 / 9);
             
             tempReading = T.toFixed(2);
-            console.log("Temperature: " + tempReading);
+       //     console.log("Temperature: " + tempReading);
             
             if(tempReading < 30)
                 heatingPad.high();
@@ -168,8 +168,11 @@ var port = 3000;
                 var lightLevel = currentLight;
                 var desiredLight = parseInt(lightLevel) * 51;
                 
+                console.log("Light Reading1: "+lightReading1);
+                console.log("Desired Light: "+desiredLight);
+                
             if(photoOutput3 == 0)
-                    photoOutput3 = lightReading1;
+                photoOutput3 = lightReading1;
                 
             if(lightReading1 < desiredLight){
                 photoOutput3 = photoOutput3 + 1;
