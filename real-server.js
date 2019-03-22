@@ -181,7 +181,8 @@ var port = 3000;
             } else if (lightReading1 > desiredLight){
                 photoOutput3 = photoOutput3 - 1;
                 board.analogWrite(10, photoOutput3);
-                
+            } else if (lightReading1 == desiredLight){
+                board.analogWrite(10, photoOutput3);
             }
             
                 // var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
