@@ -66,7 +66,10 @@ var port = 3000;
   var photoResistor0 = new five.Sensor("A0");
   var photoResistor1 = new five.Sensor("A1");
   var photoResistor2 = new five.Sensor("A2");
-  var photoResistor3 = new five.Sensor("A3");
+  var photoResistor3 = new five.Sensor({
+      pin: 'A3',
+      freq: 1000
+  });
   
   const temperatureSensor = new five.Sensor({
     pin: 'A4'
@@ -163,7 +166,7 @@ var port = 3000;
         });
         
        
-        photoResistor3.on("change", function(){
+        photoResistor3.on("data", function(){
                 var lightReading1 = (this.value);
                 var lightLevel = currentLight;
                 var desiredLight = parseInt(lightLevel) * 51;
