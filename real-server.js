@@ -111,12 +111,28 @@ var port = 3000;
             
         });
         
+        photoResistor0.on("data", function(){
+            var lightReading1 = this.scaleTo(0, 255);
+            var lightLevel = currentLight;
+            var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
+             
+            if (lightOutput0 > 0 && lightOutput0 <= 255) {
+                        board.analogWrite(3, lightOutput0);
+                    } else if (lightOutput0 > 255) {
+                        board.analogWrite(3,255);
+                    } else {
+                        board.analogWrite(3, 0);
+                    }
+                    
+            console.log("Photoresistor0: " + lightOutput0);
+        });
+        
         photoResistor1.on("data", function() {
           var lightReading1 = this.scaleTo(0, 255);
           var lightLevel = currentLight;
          // console.log("LightReading3 "+lightReading1)
           //  console.log("Photoresistor3: " + lightReading3);
-          var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
+        //  var lightOutput0 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
           var lightOutput1 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
           var lightOutput2 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
           var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
@@ -126,37 +142,53 @@ var port = 3000;
         //   console.log("lightOutput2: "+lightOutput2)
         //   console.log("lightOutput3: "+lightOutput3)
           
-                    if (lightOutput0 > 0 && lightOutput0 <= 255) {
-                        board.analogWrite(3, lightOutput0);
-                    } else if (lightOutput0 > 255) {
-                        board.analogWrite(3,255);
-                    } else {
-                        board.analogWrite(3, 0);
-                    }
+                    
                     
                     if (lightOutput1 > 0 && lightOutput1 <= 255) {
                         board.analogWrite(5, lightOutput1);
-                    } else if (lightOutput0 > 255) {
+                    } else if (lightOutput1 > 255) {
                         board.analogWrite(5,255);
                     } else {
                         board.analogWrite(5, 0);
                     }
                     
-                    if (lightOutput2 > 0 && lightOutput2 <= 255) {
-                        board.analogWrite(6, lightOutput2);
-                    } else if (lightOutput0 > 255) {
-                        board.analogWrite(6,255);
-                    } else {
-                        board.analogWrite(6, 0);
-                    }
+                 console.log("Photoresistor1: " + lightOutput1);  
                     
-                    if (lightOutput3 > 0 && lightOutput3 <= 255) {
+                   
+        });
+        
+        photoResistor3.on("data", function(){
+            var lightReading1 = this.scaleTo(0, 255);
+            var lightLevel = currentLight;
+            var lightOutput3 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
+            
+            
+             if (lightOutput3 > 0 && lightOutput3 <= 255) {
                         board.analogWrite(10, lightOutput3);
-                    } else if (lightOutput0 > 255) {
+                    } else if (lightOutput3 > 255) {
                         board.analogWrite(10,255);
                     } else {
                         board.analogWrite(10, 0);
                     }
+                    
+            console.log("Photoresistor3: " + lightOutput3);
+            
+        });
+        
+        photoResistor2.on("data", function(){
+            var lightReading1 = this.scaleTo(0, 255);
+            var lightLevel = currentLight;
+            var lightOutput2 = (parseInt(lightLevel) * 51) - (lightReading1 / 4);
+            
+            if (lightOutput2 > 0 && lightOutput2 <= 255) {
+                        board.analogWrite(6, lightOutput2);
+                    } else if (lightOutput2 > 255) {
+                        board.analogWrite(6,255);
+                    } else {
+                        board.analogWrite(6, 0);
+                    } 
+                    
+            console.log("Photoresistor2: " + lightOutput2);
         });
   
     /*Board loop implementation*/
