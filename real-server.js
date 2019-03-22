@@ -164,7 +164,7 @@ var port = 3000;
         
        
         photoResistor3.on("change", function(){
-                var lightReading1 = (this.value / 4);
+                var lightReading1 = (this.value);
                 var lightLevel = currentLight;
                 var desiredLight = parseInt(lightLevel) * 51;
                 
